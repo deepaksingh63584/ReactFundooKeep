@@ -1,130 +1,105 @@
-import React, { Component } from "react";
-import { Text, TouchableOpacity, View, Image } from "react-native";
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import Dialog from "react-native-dialog";
+import React, { Component } from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Dialog } from 'material-bread';
+import { View, Button } from 'native-base';
 
-export default class DialogReminderr extends Component {
+export default class SetReminder extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            dialogVisible: false,
-            date: "Select The Date",
-            time: "",
-            setTime: "Select The Time",
-            isDatePickerVisible: false,
-            isTimePickerVisible: false,
+            visible: false
         };
     }
 
-    convert12hour = (dm) => {
-        console.log('mkkkk', dm);
-
-        var timeString = dm;
-        var H = +timeString.substr(0, 2);
-        var h = H % 12 || 12;
-        var ampm = (H < 12 || H === 24) ? "AM" : "PM";
-        timeString = h + timeString.substr(2, 3) + ampm;
-        console.log("current time:", timeString);
-        this.setState({ setTime: timeString })
+    handleOpen = () => {
+        this.setState({ visible: true })
     }
-    _showDatePicker = () => this.setState({ isDatePickerVisible: true });
-
-    _hideDatePicker = () => this.setState({ isDatePickerVisible: false });
-
-    _showTimePicker = () => this.setState({ isTimePickerVisible: true });
-
-    _hideTimePicker = () => this.setState({ isTimePickerVisible: false });
-
-    _handleDatePicked = (date) => {
-
-        var mj = JSON.stringify(date)
-        var Date1 = mj.slice(1, 11)
-        console.log(Date1);
-        this.setState({ date: Date1 })
-        // this._hideDatePicker();
-    };
-
-    _handleTimePicked = (date) => {
-        console.log('in time picker');
-        var d = " " + date
-        var dm = d.slice(17, 25)
-        this.convert12hour(dm);
-
-
-        var mj = JSON.stringify(date)
-        var Time1 = mj.slice(11, 25)
-        console.log(Time1);
-
-        this.setState({ time: Time1 })
-
-        //this._hideTimePicker();
-    };
-
-    handleNotification = () => {
-        console.log("concate");
-
-        var date = this.state.date + this.state.time
-        console.log(date);
-        var date23 = new Date(date)
-
-        if (this.state.time !== null && this.state.date !== null) {
-            console.log("in if else");
-            this.props.handleSave(this.state.date, this.state.setTime, date23)
-        }
-        else {
-            alert('entrer all details')
-        }
+    handleClose = () => {
+        this.setState({ visible: false })
     }
+
     render() {
-        return (
 
-            <Dialog.Container visible={this.props.dialogVisible}>
-                <Dialog.Title>Add Reminder</Dialog.Title>
+        const renderDialog = (
+            <Dialog
+                visible={this.state.visible}
+                onTouchOutside={this.handleClose}
+                title={'add Reminder'}
+                style={{
+                    width: 400
+                }}
 
-                <TouchableOpacity onPress={this._showDatePicker}>
-                    <View style={{ margin: 4, flexDirection: 'row', alignSelf: 'center', backgroundColor: 'transparent', width: 200, borderWidth: 1, height: 40 }}>
-                        {/* <Image style={{ height: 25, width: 30, margin: 5 }}
-                            source={require('../Image/Calendar.png')} /> */}
-                        <Text style={{ margin: 5, fontSize: 17 }}>{this.state.date}</Text>
-                        <DateTimePicker
-                            mode='date'
-                            isVisible={this.state.isDatePickerVisible}
-                            onConfirm={this._handleDatePicked}
-                            onCancel={this._hideDatePicker}
-                        />
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={this._showTimePicker}>
-                    <View style={{ margin: 4, flexDirection: 'row', alignSelf: 'center', backgroundColor: 'transparent', width: 200, borderWidth: 1, height: 40 }}>
-                        {/* <Image style={{ height: 25, width: 30, margin: 5 }}
-                            source={require('../Image/Alarm1.png')} /> */}
-                        <Text style={{ margin: 5, fontSize: 17 }}>
-                            {this.state.setTime}
+            >
+                <View style={styles.dateStyle}>
+                    <TouchableOpacity
+                        Style={styles.dateStyle}>
+                        <Text>
+                            current date
                         </Text>
-                        <DateTimePicker
-                            mode='time'
-                            is24Hour={false}
-                            isVisible={this.state.isTimePickerVisible}
-                            onConfirm={this._handleTimePicked}
-                            onCancel={this._hideTimePicker}
+                        <MaterialIcon
+                            name="arrow-drop-down"
+                            size={22}
+                            style={{
+                                justifyContent: 'flex-end'
+                            }}
                         />
-                    </View>
-                </TouchableOpacity>
-
-                <View style={{ flexDirection: 'row', top: 10, justifyContent: 'flex-end' }}>
-                    <Dialog.Button label="Save"
-                        onPress={() => this.handleNotification()
-                            //this.props.handleSave(this.state.date,this.state.time)
-                        }
-                    />
-                    <Dialog.Button label="Cancle"
-                    // onPress={this.props.handleCancel} 
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.dateStyle}>
+                    <Text Style={{}}>
+                        current TIME
+                    </Text>
+                    <MaterialIcon
+                        name="arrow-drop-down"
+                        size={22}
+                        style={{
+                            justifyContent: 'flex-end'
+                        }}
                     />
                 </View>
+                <View style={styles.buttonIcon}>
+                    <Button style={{ marginRight: 28, }}>
+                        <Text>Cancle</Text>
+                    </Button>
+                    <Button style={{ marginRight: 28, }}>
+                        <Text>Save</Text>
+                    </Button>
 
-            </Dialog.Container>
+                </View>
 
+            </Dialog>
+        );
+
+        return (
+            <>
+                <TouchableOpacity onPress={this.handleOpen}>
+                    <MaterialCommunityIcon name="bell-plus-outline" size={22} />
+                </TouchableOpacity>
+                {renderDialog}
+            </>
         );
     }
 }
+
+const styles = StyleSheet.create({
+
+    dateStyle: {
+        marginTop: 10,
+        width: 350,
+        backgroundColor: '#cc3399',
+        padding: 10,
+
+    },
+
+    buttonIcon: {
+        backgroundColor: '#ffff66',
+        marginTop: 18,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginRight: 25,
+
+    }
+
+});

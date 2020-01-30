@@ -13,14 +13,14 @@ import SetReminder from './appFolder/components/notesComponents/SetReminder';
 
 const App = () => {
   // return < DrawerContent />
-  // return <RootNavigator />
+  return <RootNavigator />
   // return <NoteCard />
   // return <Notes />
   // return <BottomPopUp />
   // return <OtherTopBar />
   // return <Archive />
   // return <TrashTopBar />
-  return <SetReminder />
+  // return <SetReminder />
 
 };
 

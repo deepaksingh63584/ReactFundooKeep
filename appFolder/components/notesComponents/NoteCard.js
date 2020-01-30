@@ -5,6 +5,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { setNoteInFireBase, updateNotesFromFireBase, trashAndRestore } from '../dashbordFirebaseDB';
 import BottemPopUp from './BottomPopUp'
+import SetReminder from './SetReminder';
 
 export default class GridViewNotes extends React.Component {
     constructor(props) {
@@ -29,12 +30,8 @@ export default class GridViewNotes extends React.Component {
     }
 
     trashAndRestoreNotes = (trash) => {
-        // console.log('aUDYQWUJDKSAOHASOIXZBCUZIJ');
         trashAndRestore(this.Item.noteId, trash)
-        // console.log(this.Item.noteId);
         this.props.navigation.navigate('Notes')
-        // console.log('dfhhfjkgjgk')
-
     }
 
     pushNotes = () => {
@@ -50,14 +47,9 @@ export default class GridViewNotes extends React.Component {
             }
         }
         else {
-            // console.log("herw updation");
             updateNotesFromFireBase(this.Item.noteId, this.state.noteTitle, this.state.noteContent, this.state.pinStatus,
                 this.state.archive, this.state.setColor, this.state.Trash, () => {
-                    // console.log(this.Item.noteId);
-
                     this.props.navigation.navigate('Notes')
-                    // console.log('update done');
-
                 })
         }
     }
@@ -66,7 +58,6 @@ export default class GridViewNotes extends React.Component {
         // console.log('iiiiiiiiiiiiiiiiiii    ' + this.Item)
         // console.log(this.state.setColor)
         // console.log(this.state.Trash);
-
         return (
             <View style={[styles.mainNotecard, { backgroundColor: this.state.setColor }]}>
                 <View style={styles.topFooter}>
@@ -77,22 +68,27 @@ export default class GridViewNotes extends React.Component {
                             <MaterialIcon name="keyboard-backspace" size={20} style={{ marginRight: 10, marginLeft: 10 }} />
                         </TouchableOpacity>
                     </View>
-                    <View
-                        style={styles.iconButton2}>
-                        <TouchableOpacity>
-                            <MaterialCommunityIcon name="pin-outline" size={22} />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <MaterialCommunityIcon name="bell-plus-outline" size={22} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this.setState({ archive: !this.state.archive })}>
-                            <MaterialIcon name="archive" size={22} />
-                        </TouchableOpacity>
-                    </View>
+                    {this.state.Trash === true ? null :
+                        <View
+                            style={styles.iconButton2}>
+                            <TouchableOpacity
+                                onPress={() => this.setState({ pinStatus: !this.state.pinStatus })}>
+                                <MaterialCommunityIcon name={!this.state.pinStatus ? "pin-outline" : "pin"} size={22} />
+                            </TouchableOpacity>
+
+                            {/* <TouchableOpacity>
+                                <MaterialCommunityIcon name="bell-plus-outline" size={22} />
+                            </TouchableOpacity> */}
+                            <SetReminder />
+
+                            <TouchableOpacity
+                                onPress={() => this.setState({ archive: !this.state.archive })}>
+                                <MaterialIcon name="archive" size={22} />
+                            </TouchableOpacity>
+                        </View>
+                    }
                 </View >
                 <View style={{
-                    //backgroundColor: '#ccffff',
                     backgroundColor: 'transparent',
                     flex: 1,
                     padding: 15
@@ -124,11 +120,11 @@ export default class GridViewNotes extends React.Component {
                     </View>
                     <View style={{ width: '50%', display: 'flex', alignItems: 'flex-end' }} >
                         <BottemPopUp
+                            Trash={this.state.Trash}
                             setColor={this.state.setColor}
                             onChangeColor={this.colorChange}
                             trashAndRestore={this.trashAndRestoreNotes}
                         />
-
                     </View>
                 </View >
             </View >

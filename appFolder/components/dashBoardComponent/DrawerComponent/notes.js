@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text, FlatList } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import TopBar from "../topAppBar"
 import BottomBar from '../bottomAppbar'
 import GridViewNotes from '../../notesComponents/GridViewNotes'
@@ -13,6 +13,9 @@ export default class Notes extends React.Component {
             pinNotes: [],
             unPinNotes: [],
             loading: true,
+            listView: true,
+            pinCount: 0,
+            unPinCount: 0
         };
     }
 
@@ -37,7 +40,9 @@ export default class Notes extends React.Component {
             }
             this.setState({
                 pinNotes: pinNotes.reverse(),
-                unPinNotes: unPinNotes.reverse()
+                unPinNotes: unPinNotes.reverse(),
+                pinCount: pinCount,
+                unPinCount: unPinCount
             }, () => {
                 // console.?og('pinNotes' + pinNotes);
                 // console.log('UNpinned Notes' + JSON.stringify(unPinNotes));
@@ -55,25 +60,49 @@ export default class Notes extends React.Component {
                     <TopBar {...this.props} />
                 </View>
                 {
-                    this.state.pinNotes.length === 0 ? null :
-                        <FlatList
-                            // numColumns={this.state.listView ? 1 : 2}
-                            data={this.state.pinNotes}
-                            renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
+                    this.state.loading === true ?
+                        <ActivityIndicator
+                            animating={this.state.loading}
+                            size="large"
+                            style={{
+                                // flex: 1,                                
+                                height: '90%',
+                                width: '100%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
                         />
+                        :
+                        null
                 }
-                {
-                    this.state.unPinNotes.length === 0 ? null :
-                        <FlatList
-                            // numColumns={this.state.listView ? 1 : 2}
-                            data={this.state.unPinNotes}
-                            renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
-                        />
-                }
+                <ScrollView>
+                    <View style={{ backgroundColor: 'pink' }}>
+                        <Text>PINNED:</Text>
+                    </View>
+                    {
+                        this.state.pinNotes.length === 0 ? null :
+                            <FlatList
+                                numColumns={this.state.listView ? 1 : 2}
+                                data={this.state.pinNotes}
+                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
+                            />
+                    }
+                    <View>
+                        <Text>UN-PINNED:</Text>
+                    </View>
+                    {
+                        this.state.unPinNotes.length === 0 ? null :
+                            <FlatList
+                                numColumns={this.state.listView ? 1 : 2}
+                                data={this.state.unPinNotes}
+                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
+                            />
+                    }</ScrollView>
                 <View style={{ bottom: 0, width: '100%', position: 'absolute' }}>
                     <BottomBar {...this.props} />
                 </View>
-            </View>
+            </View >
         );
     }
 }
