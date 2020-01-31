@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Image, Text, FlatList } from 'react
 import TrashTopBar from '../TrashTopBar';
 import { trashNotes } from '../../dashbordFirebaseDB'
 import ListViewNotes from '../../notesComponents/ListViewNotes'
-import { trashAndRestore, permanentDelete } from '../../dashbordFirebaseDB';
+
 
 export default class Trash extends React.Component {
     constructor(props) {

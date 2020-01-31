@@ -28,12 +28,9 @@ export default class OtherTopBar extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.searchButton}>
-                    <TouchableOpacity
-                        onPress={() => alert('SearchBarOpen')}>
-                        <Text style={{ padding: 14, fontSize: 20, marginTop: -17 }}>
-                            Archive
-                        </Text>
-                    </TouchableOpacity>
+                    <Text style={{ padding: 14, fontSize: 20, marginTop: -17 }}>
+                        Archive
+                    </Text>
                 </View>
                 <View>
                     <TouchableOpacity

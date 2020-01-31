@@ -9,6 +9,7 @@ import BottomPopUp from './appFolder/components/notesComponents/BottomPopUp';
 import Archive from './appFolder/components/dashBoardComponent/DrawerComponent/archive';
 import TrashTopBar from './appFolder/components/dashBoardComponent/TrashTopBar'
 import SetReminder from './appFolder/components/notesComponents/SetReminder';
+import CreateLable from './appFolder/components/notesComponents/CreateLable';
 
 
 const App = () => {
@@ -21,6 +22,7 @@ const App = () => {
   // return <Archive />
   // return <TrashTopBar />
   // return <SetReminder />
+  // return <CreateLable />
 
 };
 

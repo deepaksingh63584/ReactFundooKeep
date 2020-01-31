@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Dialog } from 'material-bread';
-import { View, Button } from 'native-base';
+import { Button } from 'react-native-elements';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment'
+
 
 export default class SetReminder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false
+            visible: false,
+            datePicker: false,
+            timePicker: false,
+            reminderDate: moment().format('MMM DD, YYYY'),
+            reminderTime: moment().format('h:mm a')
+
         };
     }
 
@@ -20,7 +28,36 @@ export default class SetReminder extends Component {
         this.setState({ visible: false })
     }
 
+
     render() {
+        console.log('date remin-   ', this.state.reminderDate)
+        console.log('time remin-   ', this.state.reminderTime);
+        console.log(this.props)
+
+        const renderDatePicker = (
+
+            <DateTimePicker
+                isVisible={this.state.datePicker}
+                mode='date'
+                onConfirm={(date) => this.setState({
+                    reminderDate: moment(date).format('MMM DD, YYYY'),
+                    datePicker: false
+                })}
+                onCancel={() => this.setState({ datePicker: false })}
+            />
+        );
+
+        const renderTimePicker = (
+            <DateTimePicker
+                isVisible={this.state.timePicker}
+                mode='time'
+                onConfirm={(time) => this.setState({
+                    reminderTime: moment(time).format('h:mm a'),
+                    timePicker: false
+                })}
+                onCancel={() => this.setState({ timePicker: false })}
+            />
+        );
 
         const renderDialog = (
             <Dialog
@@ -30,45 +67,62 @@ export default class SetReminder extends Component {
                 style={{
                     width: 400
                 }}
-
             >
-                <View style={styles.dateStyle}>
+                <View>
                     <TouchableOpacity
-                        Style={styles.dateStyle}>
-                        <Text>
-                            current date
-                        </Text>
-                        <MaterialIcon
-                            name="arrow-drop-down"
-                            size={22}
-                            style={{
-                                justifyContent: 'flex-end'
-                            }}
-                        />
+                        onPress={() => this.setState({ datePicker: true })}
+                    >
+                        <View style={styles.dateStyle}>
+                            <Text style={{ fontSize: 18 }}>
+                                {this.state.reminderDate}
+                            </Text>
+                            <View>
+                                <MaterialIcon
+                                    name="arrow-drop-down"
+                                    size={25}
+                                />
+                            </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.dateStyle}>
-                    <Text Style={{}}>
-                        current TIME
-                    </Text>
-                    <MaterialIcon
-                        name="arrow-drop-down"
-                        size={22}
-                        style={{
-                            justifyContent: 'flex-end'
-                        }}
-                    />
+                <View >
+                    <TouchableOpacity
+                        onPress={() => this.setState({ timePicker: true })}
+                    >
+                        <View style={styles.dateStyle}>
+                            <Text style={{ fontSize: 18 }}>
+                                {this.state.reminderTime}
+                            </Text>
+                            <View>
+                                <MaterialIcon
+                                    name="arrow-drop-down"
+                                    size={25}
+                                />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
+
                 <View style={styles.buttonIcon}>
-                    <Button style={{ marginRight: 28, }}>
-                        <Text>Cancle</Text>
-                    </Button>
-                    <Button style={{ marginRight: 28, }}>
-                        <Text>Save</Text>
-                    </Button>
-
+                    <View style={styles.button}>
+                        <Button
+                            title="Cancel"
+                            type="clear"
+                            onPress={this.handleClose}
+                        />
+                    </View>
+                    <View style={styles.button}>
+                        <Button
+                            title="Save"
+                            type="clear"
+                            onPress={() => {
+                                this.props.getDateTime(this.state.reminderDate, this.state.reminderTime)
+                                this.handleClose()
+                            }
+                            }
+                        />
+                    </View>
                 </View>
-
             </Dialog>
         );
 
@@ -78,6 +132,8 @@ export default class SetReminder extends Component {
                     <MaterialCommunityIcon name="bell-plus-outline" size={22} />
                 </TouchableOpacity>
                 {renderDialog}
+                {renderDatePicker}
+                {renderTimePicker}
             </>
         );
     }
@@ -86,20 +142,28 @@ export default class SetReminder extends Component {
 const styles = StyleSheet.create({
 
     dateStyle: {
-        marginTop: 10,
-        width: 350,
-        backgroundColor: '#cc3399',
+        display: 'flex',
+        marginTop: 15,
+        width: "100%",
         padding: 10,
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
 
     },
 
     buttonIcon: {
-        backgroundColor: '#ffff66',
-        marginTop: 18,
+        marginTop: 20,
+        marginBottom: 20,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        marginRight: 25,
 
+
+    },
+    button: {
+        width: '25%',
+        // marginRight: 18,
     }
 
 });

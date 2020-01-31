@@ -77,7 +77,7 @@ export default class Notes extends React.Component {
                         null
                 }
                 <ScrollView>
-                    <View style={{ backgroundColor: 'pink' }}>
+                    <View>
                         <Text>PINNED:</Text>
                     </View>
                     {

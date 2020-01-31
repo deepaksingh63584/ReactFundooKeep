@@ -6,6 +6,7 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import { setNoteInFireBase, updateNotesFromFireBase, trashAndRestore } from '../dashbordFirebaseDB';
 import BottemPopUp from './BottomPopUp'
 import SetReminder from './SetReminder';
+import moment from 'moment';
 
 export default class GridViewNotes extends React.Component {
     constructor(props) {
@@ -19,6 +20,8 @@ export default class GridViewNotes extends React.Component {
             archive: this.Item === null ? false : this.Item.Archive,
             setColor: this.Item === null ? '#ffffff' : this.Item.Color,
             Trash: this.Item === null ? false : this.Item.Trash,
+            reminderDate: this.Item === null ? '' : this.Item.reminderDate,
+            reminderTime: this.Item === null ? '' : this.Item.reminderTime,
 
         };
     }
@@ -38,7 +41,7 @@ export default class GridViewNotes extends React.Component {
         if (this.Item === null) {
             if (this.state.noteTitle !== '' || this.state.noteContent !== '') {
                 setNoteInFireBase(this.state.noteTitle, this.state.noteContent, this.state.pinStatus,
-                    this.state.archive, this.state.setColor, this.state.Trash, () => {
+                    this.state.archive, this.state.setColor, this.state.Trash, this.state.reminderDate, this.state.reminderTime, () => {
                         this.props.navigation.navigate('Notes')
                     })
             }
@@ -48,7 +51,7 @@ export default class GridViewNotes extends React.Component {
         }
         else {
             updateNotesFromFireBase(this.Item.noteId, this.state.noteTitle, this.state.noteContent, this.state.pinStatus,
-                this.state.archive, this.state.setColor, this.state.Trash, () => {
+                this.state.archive, this.state.setColor, this.state.Trash, this.state.reminderDate, this.state.reminderTime, () => {
                     this.props.navigation.navigate('Notes')
                 })
         }
@@ -56,8 +59,10 @@ export default class GridViewNotes extends React.Component {
 
     render() {
         // console.log('iiiiiiiiiiiiiiiiiii    ' + this.Item)
-        // console.log(this.state.setColor)
-        // console.log(this.state.Trash);
+        console.log('date-   ', this.state.reminderDate)
+        console.log('time-   ', this.state.reminderTime);
+
+
         return (
             <View style={[styles.mainNotecard, { backgroundColor: this.state.setColor }]}>
                 <View style={styles.topFooter}>
@@ -79,7 +84,13 @@ export default class GridViewNotes extends React.Component {
                             {/* <TouchableOpacity>
                                 <MaterialCommunityIcon name="bell-plus-outline" size={22} />
                             </TouchableOpacity> */}
-                            <SetReminder />
+                            <SetReminder
+                                getDateTime={(date, time) => this.setState({
+                                    reminderDate: moment(date).format(),
+                                    reminderTime: time,
+                                }, () => console.log(date + ': kjk'))
+                                }
+                            />
 
                             <TouchableOpacity
                                 onPress={() => this.setState({ archive: !this.state.archive })}>
@@ -164,7 +175,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     iconButton2: {
-        display: 'flex', width: '35%',
+        display: 'flex',
+        width: '35%',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',

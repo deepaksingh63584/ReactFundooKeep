@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import RBSheet from "react-native-raw-bottom-sheet";
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class OtherTopBar extends Component {
     constructor(props) {
@@ -24,11 +23,9 @@ export default class OtherTopBar extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.searchButton}>
-                    <TouchableOpacity>
-                        <Text style={{ padding: 14, fontSize: 20, marginTop: -17 }}>
-                            Trash
-                        </Text>
-                    </TouchableOpacity>
+                    <Text style={{ padding: 14, fontSize: 20, marginTop: -17 }}>
+                        Trash
+                    </Text>
                 </View>
                 <View>
                     <MaterialCommunityIcon name="dots-vertical" size={30} style={{ marginRight: 10, marginTop: -6 }} onPress={
