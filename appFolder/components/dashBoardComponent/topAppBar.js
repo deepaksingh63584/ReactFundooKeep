@@ -22,6 +22,8 @@ export default class DashBoard extends Component {
 
     render() {
         // console.log(this.props);
+        // console.log('change view', this.props.viewChange);
+
         return (
             <View style={styles.mainSearch}>
                 <View style={styles.menuButton}>
@@ -45,10 +47,10 @@ export default class DashBoard extends Component {
 
                 <View>
                     <TouchableOpacity
-                        onPress={() => alert('gridViewNotes')}
+                        onPress={this.props.viewChange}
                     >
                         <Image style={{ height: 25, width: 25, marginRight: '10%' }}
-                            source={!this.state.ViewList ? grid : list}
+                            source={!this.props.listView ? grid : list}
 
                         />
                     </TouchableOpacity>

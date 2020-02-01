@@ -23,6 +23,7 @@ export default class GridViewNotes extends React.Component {
             reminderDate: this.Item === null ? '' : this.Item.reminderDate,
             reminderTime: this.Item === null ? '' : this.Item.reminderTime,
 
+
         };
     }
 
@@ -52,15 +53,16 @@ export default class GridViewNotes extends React.Component {
         else {
             updateNotesFromFireBase(this.Item.noteId, this.state.noteTitle, this.state.noteContent, this.state.pinStatus,
                 this.state.archive, this.state.setColor, this.state.Trash, this.state.reminderDate, this.state.reminderTime, () => {
-                    this.props.navigation.navigate('Notes')
+                    this.props.navigation.navigate('Notes');
                 })
+            this.props.navigation.navigate('Notes')
         }
     }
 
     render() {
         // console.log('iiiiiiiiiiiiiiiiiii    ' + this.Item)
-        console.log('date-   ', this.state.reminderDate)
-        console.log('time-   ', this.state.reminderTime);
+        // console.log('date-   ', this.state.reminderDate)
+        // console.log('time-   ', this.state.reminderTime);
 
 
         return (
@@ -73,6 +75,7 @@ export default class GridViewNotes extends React.Component {
                             <MaterialIcon name="keyboard-backspace" size={20} style={{ marginRight: 10, marginLeft: 10 }} />
                         </TouchableOpacity>
                     </View>
+
                     {this.state.Trash === true ? null :
                         <View
                             style={styles.iconButton2}>
@@ -81,14 +84,12 @@ export default class GridViewNotes extends React.Component {
                                 <MaterialCommunityIcon name={!this.state.pinStatus ? "pin-outline" : "pin"} size={22} />
                             </TouchableOpacity>
 
-                            {/* <TouchableOpacity>
-                                <MaterialCommunityIcon name="bell-plus-outline" size={22} />
-                            </TouchableOpacity> */}
                             <SetReminder
                                 getDateTime={(date, time) => this.setState({
                                     reminderDate: moment(date).format(),
                                     reminderTime: time,
-                                }, () => console.log(date + ': kjk'))
+                                }, () =>
+                                    console.log(date + ': kjk'))
                                 }
                             />
 
@@ -122,6 +123,7 @@ export default class GridViewNotes extends React.Component {
                         />
                     </ScrollView>
                 </View>
+
                 <View style={styles.bottomFooter}>
                     <View
                         style={{ width: '50%' }}>

@@ -19,6 +19,12 @@ export default class Notes extends React.Component {
         };
     }
 
+    viewChange = () => {
+        this.setState({
+            listView: !this.state.listView
+        })
+    }
+
     componentDidMount = () => {
         fetchNotesFromFireBase((snapObj) => {
             let pinNotes = []
@@ -57,7 +63,10 @@ export default class Notes extends React.Component {
         return (
             <View style={{ height: "100%", width: "100%" }}>
                 <View>
-                    <TopBar {...this.props} />
+                    <TopBar {...this.props}
+                        listView={this.state.listView}
+                        viewChange={this.viewChange}
+                    />
                 </View>
                 {
                     this.state.loading === true ?
@@ -85,20 +94,23 @@ export default class Notes extends React.Component {
                             <FlatList
                                 numColumns={this.state.listView ? 1 : 2}
                                 data={this.state.pinNotes}
-                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
+                                key={this.state.listView ? 1 : 2}
+                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
                             />
                     }
                     <View>
-                        <Text>UN-PINNED:</Text>
+                        <Text>OTHERS:</Text>
                     </View>
                     {
                         this.state.unPinNotes.length === 0 ? null :
                             <FlatList
                                 numColumns={this.state.listView ? 1 : 2}
                                 data={this.state.unPinNotes}
-                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
+                                key={this.state.listView ? 1 : 2}
+                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
                             />
-                    }</ScrollView>
+                    }
+                </ScrollView>
                 <View style={{ bottom: 0, width: '100%', position: 'absolute' }}>
                     <BottomBar {...this.props} />
                 </View>

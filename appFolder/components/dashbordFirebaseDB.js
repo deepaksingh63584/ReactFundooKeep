@@ -6,9 +6,7 @@ import Trash from './dashBoardComponent/DrawerComponent/trash';
 
 export async function setNoteInFireBase(Title, Content, PinStatus, Archive, Color, Trash, date, time, callback) {
     // console.log('uf : ' + uid);
-    console.log('date- ', date, 'time- ', time);
-
-
+    // console.log('date- ', date, 'time- ', time);
     const uid = await AsyncStorage.getItem('uid')
     dashboardFireBase.database().ref('/users/' + uid + '/Notes/').push({
         Title: Title,
@@ -45,6 +43,7 @@ export async function updateNotesFromFireBase(key, Title, Content, PinStatus, Ar
         reminderDate: date,
         reminderTime: time,
     }).then((success) => {
+        console.log(success);
         callback()
     });
 }

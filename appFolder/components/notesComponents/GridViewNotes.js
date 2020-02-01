@@ -13,6 +13,8 @@ export default class GridViewNotes extends React.Component {
     render() {
         // console.log(",data",JSON.stringify(this.props));
         // console.log(JSON.stringify(this.props.Content));
+        // console.log(this.props.listView);
+
         return (
             <ScrollView>
                 <View>
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     cardStyle: {
         display: 'flex',
         flexDirection: 'row',
-        width: 205,
+        width: "90%",
         marginTop: 12,
         marginLeft: 16,
         marginRight: 16,
