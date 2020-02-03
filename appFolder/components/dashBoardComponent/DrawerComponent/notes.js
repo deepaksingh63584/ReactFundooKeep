@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import TopBar from "../topAppBar"
 import BottomBar from '../bottomAppbar'
-import GridViewNotes from '../../notesComponents/GridViewNotes'
 import ListViewNotes from '../../notesComponents/ListViewNotes'
 import { fetchNotesFromFireBase } from '../../dashbordFirebaseDB';
 
@@ -15,14 +14,19 @@ export default class Notes extends React.Component {
             loading: true,
             listView: true,
             pinCount: 0,
-            unPinCount: 0
+            unPinCount: 0,
+            list: 1,
+
         };
     }
 
-    viewChange = () => {
-        this.setState({
-            listView: !this.state.listView
+    viewChange = async () => {
+        await this.setState({
+            listView: !this.state.listView,
+
         })
+        console.log("value if kist vieee==>", this.state.listView);
+
     }
 
     componentDidMount = () => {
@@ -48,9 +52,9 @@ export default class Notes extends React.Component {
                 pinNotes: pinNotes.reverse(),
                 unPinNotes: unPinNotes.reverse(),
                 pinCount: pinCount,
-                unPinCount: unPinCount
+                unPinCount: unPinCount,
             }, () => {
-                // console.?og('pinNotes' + pinNotes);
+                // console.log('pinNotes' + pinNotes);
                 // console.log('UNpinned Notes' + JSON.stringify(unPinNotes));
                 this.setState({
                     loading: false,
@@ -60,6 +64,7 @@ export default class Notes extends React.Component {
     }
 
     render() {
+        // console.log('ahdjkjhjZKJjnk', this.props);
         return (
             <View style={{ height: "100%", width: "100%" }}>
                 <View>
@@ -87,29 +92,31 @@ export default class Notes extends React.Component {
                 }
                 <ScrollView>
                     <View>
-                        <Text>PINNED:</Text>
+                        <Text style={{ padding: 10, fontSize: 18 }}>PINNED:</Text>
+                        {
+                            this.state.pinNotes.length !== 0 ?
+                                <FlatList
+                                    numColumns={this.state.listView ? 1 : 2}
+                                    data={this.state.pinNotes}
+                                    key={this.state.listView ? 1 : 2}
+                                    renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
+                                />
+                                :
+                                null
+                        }
                     </View>
-                    {
-                        this.state.pinNotes.length === 0 ? null :
-                            <FlatList
-                                numColumns={this.state.listView ? 1 : 2}
-                                data={this.state.pinNotes}
-                                key={this.state.listView ? 1 : 2}
-                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
-                            />
-                    }
                     <View>
-                        <Text>OTHERS:</Text>
+                        <Text style={{ padding: 10, fontSize: 18 }}>OTHERS:</Text>
+                        {
+                            this.state.unPinNotes.length === 0 ? null :
+                                <FlatList
+                                    numColumns={this.state.listView ? 1 : 2}
+                                    data={this.state.unPinNotes}
+                                    key={this.state.listView ? 1 : 2}
+                                    renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
+                                />
+                        }
                     </View>
-                    {
-                        this.state.unPinNotes.length === 0 ? null :
-                            <FlatList
-                                numColumns={this.state.listView ? 1 : 2}
-                                data={this.state.unPinNotes}
-                                key={this.state.listView ? 1 : 2}
-                                renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
-                            />
-                    }
                 </ScrollView>
                 <View style={{ bottom: 0, width: '100%', position: 'absolute' }}>
                     <BottomBar {...this.props} />

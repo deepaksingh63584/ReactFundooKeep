@@ -2,6 +2,8 @@ import React from 'react';
 import { View, StyleSheet, Text, } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Card, Title, Paragraph } from 'react-native-paper';
+import { Chip } from 'material-bread';
+import moment from 'moment';
 
 export default class ListViewNotes extends React.Component {
     constructor(props) {
@@ -23,7 +25,17 @@ export default class ListViewNotes extends React.Component {
                         onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}>
                         <Text style={styles.cardTitle}>{this.props.Title}</Text>
                         <Text style={{ padding: 10 }}>{this.props.Content}</Text>
+                        {
+                            this.props.reminderTime !== '' &&
+                            <View style={{ padding: 8 }}>
+                                <Chip
+                                    text={moment(this.props.reminderDate).format('MMM D') + ', ' + this.props.reminderTime}
+                                    chipStyle='outlined'
+                                />
+                            </View>
+                        }
                     </Card>
+
                 </View>
             </ScrollView>
         );

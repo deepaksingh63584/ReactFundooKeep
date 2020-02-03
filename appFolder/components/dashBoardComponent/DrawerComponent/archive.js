@@ -21,7 +21,6 @@ export default class Archive extends React.Component {
                     if (snapObj[key].Archive === true && snapObj[key].Trash === false) {
                         snapObj[key].noteId = key
                         Notes.push(snapObj[key])
-                        //Notes[Count++].noteId = key;
                         this.props.navigation.navigate('Notes')
                     }
 

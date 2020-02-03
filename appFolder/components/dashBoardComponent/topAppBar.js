@@ -7,7 +7,7 @@ const grid = require('../../assets/grid.png');
 const list = require('../../assets/list.png');
 
 
-export default class DashBoard extends Component {
+export default class TopAppBar extends Component {
     constructor(props) {
         super(props);
         this.state = {

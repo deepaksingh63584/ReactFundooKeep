@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet, } from 'react-native';
+import { View, Text, Button, StyleSheet, ScrollView, } from 'react-native';
 import { TouchableHighlight } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
@@ -129,11 +129,15 @@ export default class BottomPopUp extends Component {
 const ControlledColorPicker = (props) => {
     let selectedColor = '';
     return (
-        <ColorPalette
-            onChange={color => props.onChangeColor(color)}
-            title={null}
-            colors={['#ffffff', '#f28b82', '#fbbc04', '#ff80b3', '#ccff90', '#a7ffeb', '#d7aefb', '#adad85', '#4dc3ff', '#d98c8c']}
-        />)
+        <ScrollView horizontal>
+            <ColorPalette
+                onChange={color => props.onChangeColor(color)}
+                title={null}
+                colors={['#ffffff', '#f28b82', '#fbbc04', '#ff80b3', '#ccff90', '#a7ffeb', '#d7aefb',
+                    '#adad85', '#4dc3ff', '#d98c8c', '#ecffb3', '#ffb3ff', '#b3e6b3', '#ffc6b3']}
+            />
+        </ScrollView>
+    )
 }
 
 const styles = StyleSheet.create({

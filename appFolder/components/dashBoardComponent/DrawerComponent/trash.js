@@ -21,7 +21,7 @@ export default class Trash extends React.Component {
                     if (snapObj[key].Trash === true) {
                         snapObj[key].noteId = key
                         Notes.push(snapObj[key])
-                        //Notes[Count++].noteId = key;
+                        //Notes[Count++].noteId = key
                     }
                 })
                 this.setState({ Notes: Notes })

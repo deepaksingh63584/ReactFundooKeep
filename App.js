@@ -9,12 +9,13 @@ import BottomPopUp from './appFolder/components/notesComponents/BottomPopUp';
 import Archive from './appFolder/components/dashBoardComponent/DrawerComponent/archive';
 import TrashTopBar from './appFolder/components/dashBoardComponent/TrashTopBar'
 import SetReminder from './appFolder/components/notesComponents/SetReminder';
-import CreateLable from './appFolder/components/notesComponents/CreateLable';
+import CreateLable from './appFolder/components/LabelsComponents/CreateLable';
+
 
 
 const App = () => {
   // return < DrawerContent />
-  return <RootNavigator />
+  // return <RootNavigator />
   // return <NoteCard />
   // return <Notes />
   // return <BottomPopUp />
@@ -22,7 +23,7 @@ const App = () => {
   // return <Archive />
   // return <TrashTopBar />
   // return <SetReminder />
-  // return <CreateLable />
+  return <CreateLable />
 
 };
 

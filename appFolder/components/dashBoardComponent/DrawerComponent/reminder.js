@@ -1,18 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { View, FlatList } from 'react-native';
 import OtherTopBar from '../OtherTopBar';
-import BottomBar from '../bottomAppbar'
+import ListViewNotes from '../../notesComponents/ListViewNotes'
+import { fetchNotesFromFireBase } from '../../dashbordFirebaseDB';
 
 
 export default class Reminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pinNotes: [],
-            unPinNotes: [],
+            Notes: [],
         };
+    }
+
+    componentDidMount = () => {
+        fetchNotesFromFireBase((snapObj) => {
+            let Notes = []
+            if (snapObj !== null && snapObj !== undefined) {
+                Object.getOwnPropertyNames(snapObj).map((key, index) => {
+                    if (snapObj[key].reminderTime !== '') {
+                        snapObj[key].noteId = key
+                        Notes.push(snapObj[key])
+
+                    }
+                })
+                this.setState({ Notes: Notes })
+            }
+        })
     }
 
     render() {
@@ -22,36 +36,13 @@ export default class Reminder extends React.Component {
                     <OtherTopBar {...this.props} />
                 </View>
                 {
-                    this.state.pinNotes.length === 0 ? null :
+                    this.state.Notes.length === 0 ? null :
                         <FlatList
-                            data={this.state.pinNotes}
+                            data={this.state.Notes}
                             renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
                         />
                 }
-                {
-                    this.state.unPinNotes.length === 0 ? null :
-                        <FlatList
-                            data={this.state.unPinNotes}
-                            renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
-                        />
-                }
-                <View style={{ bottom: 0, width: '100%', position: 'absolute' }}>
-                    <BottomBar {...this.props} />
-                </View>
             </View>
         );
     }
 }
-
-
-const styles = StyleSheet.create({
-
-    bottomFooter: {
-        height: 50,
-        display: 'flex',
-        flexDirection: 'row',
-        // backgroundColor: '#00ff00',
-        backgroundColor: 'transparent'
-    },
-
-});

@@ -6,7 +6,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Divider } from 'react-native-paper';
 
-export default class Notes extends React.Component {
+export default class DrawerContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {

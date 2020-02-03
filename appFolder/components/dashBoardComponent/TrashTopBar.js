@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default class OtherTopBar extends Component {
+export default class TrashTopBar extends Component {
     constructor(props) {
         super(props);
         this.state = {

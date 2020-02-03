@@ -30,9 +30,9 @@ export default class SetReminder extends Component {
 
 
     render() {
-        console.log('date remin-   ', this.state.reminderDate)
-        console.log('time remin-   ', this.state.reminderTime);
-        console.log(this.props)
+        // console.log('date remin-   ', this.state.reminderDate)
+        // console.log('time remin-   ', this.state.reminderTime);
+        // console.log(this.props)
 
         const renderDatePicker = (
 

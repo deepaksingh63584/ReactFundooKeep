@@ -7,6 +7,7 @@ import { setNoteInFireBase, updateNotesFromFireBase, trashAndRestore } from '../
 import BottemPopUp from './BottomPopUp'
 import SetReminder from './SetReminder';
 import moment from 'moment';
+import { Chip } from 'material-bread';
 
 export default class GridViewNotes extends React.Component {
     constructor(props) {
@@ -64,7 +65,6 @@ export default class GridViewNotes extends React.Component {
         // console.log('date-   ', this.state.reminderDate)
         // console.log('time-   ', this.state.reminderTime);
 
-
         return (
             <View style={[styles.mainNotecard, { backgroundColor: this.state.setColor }]}>
                 <View style={styles.topFooter}>
@@ -121,6 +121,33 @@ export default class GridViewNotes extends React.Component {
                             value={this.state.noteContent}
                             onChangeText={(text) => this.setState({ noteContent: text })}
                         />
+                        {
+                            this.Item !== '' ?
+                                this.state.reminderTime !== '' &&
+                                <View style={{ padding: 8 }}>
+                                    <Chip
+                                        text={moment(this.state.reminderDate).format('MMM D') + ', ' + this.state.reminderTime}
+                                        chipStyle='outlined'
+                                        onDelete={() => this.setState({
+                                            reminderDate: '',
+                                            reminderTime: ''
+                                        })}
+                                    />
+                                </View>
+                                :
+                                this.props.reminderTime !== '' &&
+                                <View style={{ padding: 8 }}>
+                                    <Chip
+                                        text={moment(this.props.reminderDate).format('MMM D') + ', ' + this.state.reminderTime}
+                                        chipStyle='outlined'
+                                        onDelete={() => this.setState({
+                                            reminderDate: '',
+                                            reminderTime: ''
+                                        })}
+                                    />
+                                </View>
+
+                        }
                     </ScrollView>
                 </View>
 
