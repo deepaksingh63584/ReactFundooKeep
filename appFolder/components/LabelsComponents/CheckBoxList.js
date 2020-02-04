@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, CheckBox } from 'react-native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export default class CreateLable extends React.Component {
+export default class CheckBoxList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             btnState: false,
+            showpassword: false
         };
     }
 
@@ -28,19 +29,14 @@ export default class CreateLable extends React.Component {
                             size={25} style={{ marginRight: 20, marginLeft: 10 }} />
                     </TouchableOpacity>
                     <View>
-                        <TextInput
-                            style={{ fontSize: 18, width: 350 }}
-                            placeholder="Create new labels "
-                            defaultValue={this.props.Label}
-                            multiline={true}
-                            maxLength={50}
-                        />
+                        <Text
+                            style={{ fontSize: 18, width: 350 }}>
+                            {this.props.Label}
+                        </Text>
                     </View>
-                    <TouchableOpacity
-                        onPress={this.handleChange}>
-                        <MaterialCommunityIcon name={!this.state.btnState ? "pencil-outline" : "check"}
-                            size={25} style={{ marginRight: 20, marginLeft: 10 }} />
-                    </TouchableOpacity>
+                    <CheckBox
+                        value={this.state.showpassword}
+                        onChange={() => this.setState({ showpassword: !this.state.showpassword ? true : false })} />
                 </View>
             </View>
         );
@@ -65,4 +61,3 @@ const styles = StyleSheet.create({
     },
 
 });
-

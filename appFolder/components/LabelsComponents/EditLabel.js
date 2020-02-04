@@ -1,19 +1,27 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, TextInput, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TextInput, Text, FlatList } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import { Divider } from 'material-bread';
+import CreateLable from './CreateLable';
 
-export default class Lable extends React.Component {
+export default class EditLabel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             btnState: false,
+
         };
+    }
+
+    handleChange = async () => {
+        await this.setState({
+            btnState: !this.state.btnState,
+
+        })
     }
 
     render() {
         return (
-            <View style={{ height: '100%', width: '100%', backgroundColor: '#ddffcc' }}>
+            <View style={{ height: '100%', width: '100%' }}>
                 <View style={styles.topFooter}>
                     <View
                         style={styles.iconButton}>
@@ -28,15 +36,15 @@ export default class Lable extends React.Component {
                         </View>
                     </View>
                 </View>
-                <Divider style={{ borderBottomColor: 'grey', borderBottomWidth: 1, }} />
                 <View style={styles.topFooter}>
                     <View
                         style={styles.iconButton}>
                         <TouchableOpacity
-                            onPress={() => this.setState({
-                                btnState: false
-                            })}>
-                            <MaterialIcon name={!this.state.btnState ? "close" : "add"} size={25} style={{ marginRight: 20, marginLeft: 10 }} />
+                            onPress={this.handleChange}>
+                            <MaterialIcon name={!this.state.btnState ? "close" : "add"}
+                                size={25}
+                                style={{ marginRight: 20, marginLeft: 10 }}
+                            />
                         </TouchableOpacity>
                         <View>
                             <TextInput
@@ -46,16 +54,20 @@ export default class Lable extends React.Component {
                                 maxLength={50}
                             />
                         </View>
-                        <TouchableOpacity
-                            onPress={(e) => this.setState({
-                                btnState: false
-                            })}>
-                            <MaterialIcon name="check" size={30} style={{ marginRight: 20, marginLeft: 10 }} />
+                        <TouchableOpacity>
+                            <MaterialIcon
+                                name="check"
+                                size={30}
+                                style={{ marginRight: 20, marginLeft: 10 }} />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <Divider style={{ borderBottomColor: 'grey', borderBottomWidth: 1, }} />
-
+                <View
+                    style={{ backgroundColor: '#ff99c2' }}>
+                    <FlatList
+                        renderItem={({ item }) => <CreateLable {...item} />}
+                    />
+                </View>
             </View>
         );
     }
@@ -68,6 +80,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         // backgroundColor: 'deeppink',
+        borderBottomColor: 'grey',
+        borderBottomWidth: 1
     },
 
     iconButton: {
@@ -75,7 +89,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '65%',
         alignItems: 'center',
-        backgroundColor: 'transparent'
+        // backgroundColor: 'transparent'
     },
 
 });

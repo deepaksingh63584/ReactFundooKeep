@@ -17,6 +17,8 @@ export default class BottomPopUp extends Component {
     }
 
     render() {
+        // console.log('sgdfadfuhj', this.props);
+
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                 <MaterialCommunityIcon name="dots-vertical" size={30} style={{ marginRight: 10, marginTop: 8 }} onPress={
@@ -31,8 +33,7 @@ export default class BottomPopUp extends Component {
                                 this.RBSheet = ref;
                             }}
 
-                            height={330}
-                            duration={250}
+                            height={300}
                         >
                             <View style={{ backgroundColor: this.props.setColor }}>
                                 <TouchableHighlight underlayColor='#363534'
@@ -76,8 +77,10 @@ export default class BottomPopUp extends Component {
                                     </View>
                                 </TouchableHighlight>
                                 <TouchableHighlight underlayColor='#363534'
-                                    onPress={() => alert('labels maintain')
-                                        // this.props.navigation.navigate('Notes')
+                                    onPress={() => {
+                                        this.RBSheet.close();
+                                        this.props.labelNavigation.navigate('AddLabel')
+                                    }
                                     }>
                                     <View
                                         style={styles.iconButton}>
@@ -95,7 +98,6 @@ export default class BottomPopUp extends Component {
                             }}
 
                             height={99}
-                            duration={250}
                         >
                             <View style={{ backgroundColor: this.props.setColor }}>
                                 <TouchableHighlight underlayColor='#363534'

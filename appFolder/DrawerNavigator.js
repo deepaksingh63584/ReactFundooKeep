@@ -5,7 +5,7 @@ import notes from './components/dashBoardComponent/DrawerComponent/notes'
 import reminder from './components/dashBoardComponent/DrawerComponent/reminder'
 import archive from './components/dashBoardComponent/DrawerComponent/archive'
 import trash from './components/dashBoardComponent/DrawerComponent/trash'
-import Label from './components/dashBoardComponent/DrawerComponent/label'
+import editLabel from './components/dashBoardComponent/DrawerComponent/EditLabel'
 import DrawerContent from "./components/dashBoardComponent/DrawerContent";
 
 export const DrawerNavigator = createDrawerNavigator({
@@ -16,7 +16,7 @@ export const DrawerNavigator = createDrawerNavigator({
         screen: reminder
     },
     Label: {
-        screen: Label
+        screen: editLabel
     },
     Archive: {
         screen: archive

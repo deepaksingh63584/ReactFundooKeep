@@ -164,6 +164,7 @@ export default class GridViewNotes extends React.Component {
                             setColor={this.state.setColor}
                             onChangeColor={this.colorChange}
                             trashAndRestore={this.trashAndRestoreNotes}
+                            labelNavigation={this.props.navigation}
                         />
                     </View>
                 </View >

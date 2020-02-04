@@ -15,7 +15,7 @@ import CreateLable from './appFolder/components/LabelsComponents/CreateLable';
 
 const App = () => {
   // return < DrawerContent />
-  // return <RootNavigator />
+  return <RootNavigator />
   // return <NoteCard />
   // return <Notes />
   // return <BottomPopUp />
@@ -23,7 +23,7 @@ const App = () => {
   // return <Archive />
   // return <TrashTopBar />
   // return <SetReminder />
-  return <CreateLable />
+  // return <CreateLable />
 
 };
 

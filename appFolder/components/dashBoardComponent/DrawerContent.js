@@ -5,15 +5,33 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import AntIcon from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { Divider } from 'react-native-paper';
+import { getLabel } from '../LabelsDataBase';
 
 export default class DrawerContent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            labelValue: null,
         };
     }
+
+    componentDidMount = () => {
+        getLabel((labelValue) => {
+            let labelObj = []
+            if (labelValue !== null && labelValue !== undefined) {
+                Object.getOwnPropertyNames(labelValue).map((key, index) => {
+                    labelValue[key].lableId = key
+                    labelObj.push(labelValue[key])
+                })
+            }
+            this.setState({
+                labelValue: labelObj.reverse(),
+            })
+        })
+    }
+
     render() {
+        console.log('LabelValue    ', this.state.labelValue);
         return (
             <ScrollView>
                 <View style={styles.drawerTitle}>
@@ -42,7 +60,21 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Reminder</Text>
                     </View>
                 </TouchableHighlight>
-                <Divider />
+                <Divider style={{ borderBottomColor: 'grey', borderBottomWidth: .3 }} />
+                {
+                    this.state.labelValue !== null &&
+                    (this.state.labelValue).map(text => (
+                        <TouchableHighlight underlayColor='#feefc3'
+                            onPress={() => this.props.navigation.navigate('Label')}>
+                            <View
+                                style={styles.iconButton}>
+                                <MaterialCommunityIcon name="label-outline" size={30} />
+                                <Text style={styles.textField}>{text.Label}</Text>
+                            </View>
+                        </TouchableHighlight>
+                    ))
+
+                }
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Label')}>
                     <View
@@ -51,7 +83,7 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Create new Notes</Text>
                     </View>
                 </TouchableHighlight>
-                <Divider />
+                <Divider style={{ borderBottomColor: 'grey', borderBottomWidth: .3 }} />
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Archive')}>
                     <View

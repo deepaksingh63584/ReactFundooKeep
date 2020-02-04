@@ -49,16 +49,17 @@ const styles = StyleSheet.create({
         // paddingTop: 50,
     },
     cardStyle: {
-        width: "92%",
+        // width: "92%",
         marginTop: 12,
         marginLeft: 8,
+        marginRight: 8,
         borderRadius: 8,
         borderColor: 'grey',
         // backgroundColor: 'pink'
     },
 
     cardStyle2: {
-        width: "92%",
+        // width: "92%",
         marginTop: 12,
         marginLeft: 16,
         marginRight: 16,
