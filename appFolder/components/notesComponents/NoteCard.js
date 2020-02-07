@@ -23,9 +23,10 @@ export default class GridViewNotes extends React.Component {
             Trash: this.Item === null ? false : this.Item.Trash,
             reminderDate: this.Item === null ? '' : this.Item.reminderDate,
             reminderTime: this.Item === null ? '' : this.Item.reminderTime,
-
-
+            Label: this.Item === null ? '' : this.Item.Label,
+            noteId: this.Item === null ? '' : this.Item.noteId,
         };
+        console.log('NoteId in Notecard', this.state.noteId);
     }
 
     colorChange = (color) => {
@@ -75,7 +76,6 @@ export default class GridViewNotes extends React.Component {
                             <MaterialIcon name="keyboard-backspace" size={20} style={{ marginRight: 10, marginLeft: 10 }} />
                         </TouchableOpacity>
                     </View>
-
                     {this.state.Trash === true ? null :
                         <View
                             style={styles.iconButton2}>
@@ -148,6 +148,28 @@ export default class GridViewNotes extends React.Component {
                                 </View>
 
                         }
+                        {
+                            this.Item !== '' ?
+                                this.state.Label !== '' && this.state.Label !== undefined &&
+                                Object.getOwnPropertyNames(this.state.Label).map((lableId) => (
+                                    <View style={{ padding: 8 }}>
+                                        <Chip
+                                            text={this.state.Label[lableId].Label}
+                                            chipStyle='outlined'
+                                        />
+                                    </View>
+                                ))
+                                :
+                                this.props.Label !== '' && this.props.Label !== undefined &&
+                                Object.getOwnPropertyNames(this.props.Label).map((lableId) => (
+                                    <View style={{ padding: 8 }}>
+                                        <Chip
+                                            text={this.props.Label[lableId].labelName}
+                                            chipStyle='outlined'
+                                        />
+                                    </View>
+                                ))
+                        }
                     </ScrollView>
                 </View>
 
@@ -165,6 +187,8 @@ export default class GridViewNotes extends React.Component {
                             onChangeColor={this.colorChange}
                             trashAndRestore={this.trashAndRestoreNotes}
                             labelNavigation={this.props.navigation}
+                            noteId={this.state.noteId}
+                            Item={this.Item}
                         />
                     </View>
                 </View >

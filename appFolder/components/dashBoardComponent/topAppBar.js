@@ -38,7 +38,7 @@ export default class TopAppBar extends Component {
                 </View>
                 <View style={styles.searchButton}>
                     <TouchableOpacity
-                        onPress={() => alert('SearchBarOpen')}>
+                        onPress={() => { this.props.navigation.navigate('SearchNote') }}>
                         <Text style={{ padding: 14, fontSize: 20, marginTop: -17 }}>
                             Search your notes..
                         </Text>

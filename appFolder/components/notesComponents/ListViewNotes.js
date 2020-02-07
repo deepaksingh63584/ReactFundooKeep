@@ -10,14 +10,15 @@ export default class ListViewNotes extends React.Component {
         super(props);
         this.state = {
 
-
         };
     }
     render() {
         // console.log(this.props.listView);
-
         // console.log(",data",JSON.stringify(this.props));
         // console.log(JSON.stringify(this.props.Content));
+        // console.log(this.props.lableId + '    ?a?    ' + this.props.Label);
+        // console.log(this.props.reminderDate + "   chsdg    " + this.props.reminderTime);
+
         return (
             <ScrollView>
                 <View style={{ height: '100%', width: '100%' }}>
@@ -25,6 +26,7 @@ export default class ListViewNotes extends React.Component {
                         onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}>
                         <Text style={styles.cardTitle}>{this.props.Title}</Text>
                         <Text style={{ padding: 10 }}>{this.props.Content}</Text>
+
                         {
                             this.props.reminderTime !== '' &&
                             <View style={{ padding: 8 }}>
@@ -33,6 +35,18 @@ export default class ListViewNotes extends React.Component {
                                     chipStyle='outlined'
                                 />
                             </View>
+                        }
+
+                        {
+                            this.props.Label !== '' && this.props.Label !== undefined &&
+                            Object.getOwnPropertyNames(this.props.Label).map((lableId) => (
+                                <View style={{ padding: 8 }}>
+                                    <Chip
+                                        text={this.props.Label[lableId].labelName}
+                                        chipStyle='outlined'
+                                    />
+                                </View>
+                            ))
                         }
                     </Card>
 

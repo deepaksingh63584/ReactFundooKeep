@@ -31,7 +31,7 @@ export default class DrawerContent extends React.Component {
     }
 
     render() {
-        console.log('LabelValue    ', this.state.labelValue);
+        // console.log('LabelValue    ', this.state.labelValue);
         return (
             <ScrollView>
                 <View style={styles.drawerTitle}>
@@ -43,6 +43,7 @@ export default class DrawerContent extends React.Component {
                     <Text style={{ color: '#DB4437', fontSize: 23 }}>o</Text>
                     <Text style={{ color: 'grey', fontSize: 23 }}> Notes</Text>
                 </View>
+
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Notes')}>
                     <View
@@ -52,6 +53,7 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Notes</Text>
                     </View>
                 </TouchableHighlight>
+
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Reminder')}>
                     <View
@@ -60,12 +62,13 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Reminder</Text>
                     </View>
                 </TouchableHighlight>
+
                 <Divider style={{ borderBottomColor: 'grey', borderBottomWidth: .3 }} />
                 {
                     this.state.labelValue !== null &&
                     (this.state.labelValue).map(text => (
                         <TouchableHighlight underlayColor='#feefc3'
-                            onPress={() => this.props.navigation.navigate('Label')}>
+                            onPress={() => this.props.navigation.navigate('LabelContent')}>
                             <View
                                 style={styles.iconButton}>
                                 <MaterialCommunityIcon name="label-outline" size={30} />
@@ -73,7 +76,6 @@ export default class DrawerContent extends React.Component {
                             </View>
                         </TouchableHighlight>
                     ))
-
                 }
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Label')}>
@@ -83,7 +85,9 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Create new Notes</Text>
                     </View>
                 </TouchableHighlight>
+
                 <Divider style={{ borderBottomColor: 'grey', borderBottomWidth: .3 }} />
+
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Archive')}>
                     <View
@@ -92,6 +96,7 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Archive</Text>
                     </View>
                 </TouchableHighlight>
+
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Trash')}>
                     <View
@@ -100,7 +105,17 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>Trash</Text>
                     </View>
                 </TouchableHighlight>
+
                 <Divider />
+                <TouchableHighlight underlayColor='#feefc3'
+                    onPress={() => this.props.navigation.navigate('ChartPage')}>
+                    <View
+                        style={styles.iconButton}>
+                        <MaterialCommunityIcon name="chart-pie" size={30} />
+                        <Text style={styles.textField}>Charts</Text>
+                    </View>
+                </TouchableHighlight>
+
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Notes')}>
                     <View
@@ -109,6 +124,7 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>settings</Text>
                     </View>
                 </TouchableHighlight>
+
                 <TouchableHighlight underlayColor='#feefc3'
                     onPress={() => this.props.navigation.navigate('Notes')}>
                     <View
@@ -117,6 +133,7 @@ export default class DrawerContent extends React.Component {
                         <Text style={styles.textField}>settings</Text>
                     </View>
                 </TouchableHighlight>
+
             </ScrollView>
         );
     }
@@ -132,7 +149,7 @@ const styles = StyleSheet.create({
     iconButton: {
         display: 'flex',
         flexDirection: 'row',
-        marginTop: 15,
+        marginTop: 15,/*  */
         marginBottom: 15,
         marginLeft: 15
     },

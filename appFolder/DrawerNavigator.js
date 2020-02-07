@@ -7,6 +7,8 @@ import archive from './components/dashBoardComponent/DrawerComponent/archive'
 import trash from './components/dashBoardComponent/DrawerComponent/trash'
 import editLabel from './components/dashBoardComponent/DrawerComponent/EditLabel'
 import DrawerContent from "./components/dashBoardComponent/DrawerContent";
+import LabelContent from './components/LabelsComponents/LabelContent';
+import ChartPage from './components/dashBoardComponent/DrawerComponent/ChartPage'
 
 export const DrawerNavigator = createDrawerNavigator({
     Notes: {
@@ -23,6 +25,12 @@ export const DrawerNavigator = createDrawerNavigator({
     },
     Trash: {
         screen: trash
+    },
+    LabelContent: {
+        screen: LabelContent
+    },
+    ChartPage: {
+        screen: ChartPage
     }
 },
     {

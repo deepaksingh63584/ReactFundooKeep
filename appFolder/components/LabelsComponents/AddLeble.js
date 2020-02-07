@@ -9,10 +9,12 @@ import CheckBoxList from './CheckBoxList';
 export default class AddLabel extends React.Component {
     constructor(props) {
         super(props);
+        this.noteObj = props.navigation.getParam('noteObj', null)
         this.state = {
             btnState: false,
             labelValue: [],
-            labelName: ''
+            labelName: '',
+            noteId: props.navigation.getParam('noteId', null)
 
         };
     }
@@ -41,14 +43,14 @@ export default class AddLabel extends React.Component {
 
     render() {
         return (
-            <View style={{ height: '100%', width: '100%' }} >
+            <View style={{ height: '100%', width: '100%', backgroundColor: '#ffffff' }} >
                 <View style={styles.topFooter}>
                     <View style={styles.topFooter}>
                         <View
                             style={styles.iconButton}>
                             <TouchableOpacity
                                 onPress={() => this.props.navigation.goBack()}>
-                                <MaterialIcon name="keyboard-backspace" size={20} style={{ marginRight: 25, marginLeft: 15 }} />
+                                <MaterialIcon name="keyboard-backspace" size={20} style={{ marginRight: 25, marginLeft: 15, opacity: .5 }} />
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => {
@@ -58,8 +60,8 @@ export default class AddLabel extends React.Component {
                                     })
                                 }}>
                                 <TextInput
-                                    style={{ fontSize: 18, width: 350 }}
-                                    placeholder="Create new labels "
+                                    style={{ fontSize: 18, width: 400 }}
+                                    placeholder="Enter label name "
                                     multiline={true}
                                     maxLength={50}
                                     value={this.state.labelName}
@@ -71,7 +73,7 @@ export default class AddLabel extends React.Component {
                 </View>
                 <FlatList
                     data={this.state.labelValue}
-                    renderItem={({ item }) => <CheckBoxList {...item} />}
+                    renderItem={({ item }) => <CheckBoxList {...item} noteId={this.state.noteId} noteObj={this.noteObj} />}
                 />
             </View >
         );
@@ -85,16 +87,15 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         // backgroundColor: 'deeppink',
-        borderBottomColor: 'grey',
-        borderBottomWidth: 1
+        // borderBottomColor: 'grey',
+        // borderBottomWidth: 1
     },
 
     iconButton: {
         display: 'flex',
         flexDirection: 'row',
-        width: '65%',
         alignItems: 'center',
-        // backgroundColor: 'transparent'
+        backgroundColor: '#ffffff'
     },
 
 });

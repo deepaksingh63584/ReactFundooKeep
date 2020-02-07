@@ -7,7 +7,6 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import RBSheet from "react-native-raw-bottom-sheet";
 import ColorPalette from 'react-native-color-palette'
 
-
 export default class BottomPopUp extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +17,7 @@ export default class BottomPopUp extends Component {
 
     render() {
         // console.log('sgdfadfuhj', this.props);
+        console.log('NoteId==gsfdg==', this.props.noteId);
 
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -79,7 +79,10 @@ export default class BottomPopUp extends Component {
                                 <TouchableHighlight underlayColor='#363534'
                                     onPress={() => {
                                         this.RBSheet.close();
-                                        this.props.labelNavigation.navigate('AddLabel')
+                                        this.props.labelNavigation.navigate('AddLabel', {
+                                            'noteId': this.props.noteId,
+                                            'noteObj': this.props.Item
+                                        })
                                     }
                                     }>
                                     <View
@@ -129,7 +132,7 @@ export default class BottomPopUp extends Component {
 }
 
 const ControlledColorPicker = (props) => {
-    let selectedColor = '';
+    // let selectedColor = '';
     return (
         <ScrollView horizontal>
             <ColorPalette
