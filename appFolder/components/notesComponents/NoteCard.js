@@ -43,8 +43,15 @@ export default class GridViewNotes extends React.Component {
     pushNotes = () => {
         if (this.Item === null) {
             if (this.state.noteTitle !== '' || this.state.noteContent !== '') {
-                setNoteInFireBase(this.state.noteTitle, this.state.noteContent, this.state.pinStatus,
-                    this.state.archive, this.state.setColor, this.state.Trash, this.state.reminderDate, this.state.reminderTime, () => {
+                setNoteInFireBase(
+                    this.state.noteTitle,
+                    this.state.noteContent,
+                    this.state.pinStatus,
+                    this.state.archive,
+                    this.state.setColor,
+                    this.state.Trash,
+                    this.state.reminderDate,
+                    this.state.reminderTime, () => {
                         this.props.navigation.navigate('Notes')
                     })
             }
@@ -53,8 +60,16 @@ export default class GridViewNotes extends React.Component {
             }
         }
         else {
-            updateNotesFromFireBase(this.Item.noteId, this.state.noteTitle, this.state.noteContent, this.state.pinStatus,
-                this.state.archive, this.state.setColor, this.state.Trash, this.state.reminderDate, this.state.reminderTime, () => {
+            updateNotesFromFireBase(
+                this.Item.noteId,
+                this.state.noteTitle,
+                this.state.noteContent,
+                this.state.pinStatus,
+                this.state.archive,
+                this.state.setColor,
+                this.state.Trash,
+                this.state.reminderDate,
+                this.state.reminderTime, () => {
                     this.props.navigation.navigate('Notes');
                 })
             this.props.navigation.navigate('Notes')
@@ -63,9 +78,6 @@ export default class GridViewNotes extends React.Component {
 
     render() {
         // console.log('iiiiiiiiiiiiiiiiiii    ' + this.Item)
-        // console.log('date-   ', this.state.reminderDate)
-        // console.log('time-   ', this.state.reminderTime);
-
         return (
             <View style={[styles.mainNotecard, { backgroundColor: this.state.setColor }]}>
                 <View style={styles.topFooter}>
@@ -149,22 +161,22 @@ export default class GridViewNotes extends React.Component {
 
                         }
                         {
-                            this.Item !== '' ?
-                                this.state.Label !== '' && this.state.Label !== undefined &&
-                                Object.getOwnPropertyNames(this.state.Label).map((lableId) => (
-                                    <View style={{ padding: 8 }}>
+                            this.Item === null ?
+                                this.state.NoteLabel !== null && this.state.NoteLabel !== undefined &&
+                                Object.getOwnPropertyNames(this.state.NoteLabel).map((lableId) => (
+                                    <View style={{ padding: 8, flexWrap: 'wrap', flexDirection: 'row', }}>
                                         <Chip
-                                            text={this.state.Label[lableId].Label}
+                                            text={this.state.NoteLabel[lableId].LabelName}
                                             chipStyle='outlined'
                                         />
                                     </View>
                                 ))
                                 :
-                                this.props.Label !== '' && this.props.Label !== undefined &&
-                                Object.getOwnPropertyNames(this.props.Label).map((lableId) => (
-                                    <View style={{ padding: 8 }}>
+                                this.Item.NoteLabel !== null && this.Item.NoteLabel !== undefined &&
+                                Object.getOwnPropertyNames(this.Item.NoteLabel).map((lableId) => (
+                                    <View style={{ padding: 8, flexWrap: 'wrap', flexDirection: 'row', }}>
                                         <Chip
-                                            text={this.props.Label[lableId].labelName}
+                                            text={this.Item.NoteLabel[lableId].LabelName}
                                             chipStyle='outlined'
                                         />
                                     </View>

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-import FeatherIcon from 'react-native-vector-icons/Feather';
-
 
 const grid = require('../../assets/grid.png');
 const list = require('../../assets/list.png');
@@ -11,6 +9,7 @@ export default class OtherTopBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            ViewList: true,
         };
     }
 
@@ -35,13 +34,16 @@ export default class OtherTopBar extends Component {
                 <View>
                     <TouchableOpacity
                         onPress={() => alert('Searching Notes')}>
-                        <MaterialIcon name="search" size={30} style={{ padding: 14, fontSize: 25, marginTop: -15 }} />
+                        <MaterialIcon name="search" size={30} style={{ padding: 14, fontSize: 25, marginTop: -15, marginRight: 10 }} />
                     </TouchableOpacity>
                 </View>
                 <View>
                     <TouchableOpacity
-                        onPress={() => alert('Grid Notes')}>
-                        <FeatherIcon name="grid" size={30} style={{ padding: 14, fontSize: 25, marginTop: -15 }} />
+                        onPress={this.props.viewChange}>
+                        <Image style={{ height: 25, width: 25, marginRight: 14 }}
+                            source={!this.props.listView ? grid : list}
+
+                        />
                     </TouchableOpacity>
                 </View>
             </View>

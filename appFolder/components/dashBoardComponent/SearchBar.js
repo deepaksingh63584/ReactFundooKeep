@@ -37,33 +37,3 @@ const styles = StyleSheet.create({
         marginTop: 8
     },
 });
-
-
-
-// <View style={styles.mainSearch}>
-
-//     <View style={styles.menuButton}>
-//         <TouchableOpacity>
-//             <Image
-//                 style={{ padding: 8, justifyContent: 'center', alignItems: 'center' }}
-//                 source={require('../../assets/menuIcon.png')}
-
-//             />
-//         </TouchableOpacity>
-//         onPress={() => alert('menu popAlert')}
-//     </View>
-//     <View style={styles.searchButton}>
-//         <TouchableOpacity>
-
-//         </TouchableOpacity>
-//     </View>
-//     <View>
-//         <TouchableOpacity>
-
-//         </TouchableOpacity>
-//     </View>
-//     <View>
-//         <TouchableOpacity>
-
-//         </TouchableOpacity>
-//     </View>

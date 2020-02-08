@@ -68,7 +68,7 @@ export default class DrawerContent extends React.Component {
                     this.state.labelValue !== null &&
                     (this.state.labelValue).map(text => (
                         <TouchableHighlight underlayColor='#feefc3'
-                            onPress={() => this.props.navigation.navigate('LabelContent')}>
+                            onPress={() => this.props.navigation.navigate('LabelContent', { 'lableId': text.lableId })}>
                             <View
                                 style={styles.iconButton}>
                                 <MaterialCommunityIcon name="label-outline" size={30} />
@@ -130,7 +130,7 @@ export default class DrawerContent extends React.Component {
                     <View
                         style={styles.iconButton}>
                         <AntIcon name="questioncircleo" size={30} />
-                        <Text style={styles.textField}>settings</Text>
+                        <Text style={styles.textField}>Help & feedback</Text>
                     </View>
                 </TouchableHighlight>
 

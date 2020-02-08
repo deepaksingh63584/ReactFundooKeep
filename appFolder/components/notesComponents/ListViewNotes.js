@@ -18,6 +18,7 @@ export default class ListViewNotes extends React.Component {
         // console.log(JSON.stringify(this.props.Content));
         // console.log(this.props.lableId + '    ?a?    ' + this.props.Label);
         // console.log(this.props.reminderDate + "   chsdg    " + this.props.reminderTime);
+        // console.log('hsajkx ==== notelevel==', this.props.NoteLabel);
 
         return (
             <ScrollView>
@@ -26,30 +27,26 @@ export default class ListViewNotes extends React.Component {
                         onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}>
                         <Text style={styles.cardTitle}>{this.props.Title}</Text>
                         <Text style={{ padding: 10 }}>{this.props.Content}</Text>
-
-                        {
-                            this.props.reminderTime !== '' &&
-                            <View style={{ padding: 8 }}>
+                        <View style={{ padding: 12, flexWrap: 'wrap', flexDirection: 'row', }}>
+                            {
+                                this.props.reminderTime !== '' &&
                                 <Chip
                                     text={moment(this.props.reminderDate).format('MMM D') + ', ' + this.props.reminderTime}
                                     chipStyle='outlined'
                                 />
-                            </View>
-                        }
+                            }
 
-                        {
-                            this.props.Label !== '' && this.props.Label !== undefined &&
-                            Object.getOwnPropertyNames(this.props.Label).map((lableId) => (
-                                <View style={{ padding: 8 }}>
+                            {
+                                this.props.NoteLabel !== null && this.props.NoteLabel !== undefined &&
+                                Object.getOwnPropertyNames(this.props.NoteLabel).map((lableId) => (
                                     <Chip
-                                        text={this.props.Label[lableId].labelName}
+                                        text={this.props.NoteLabel[lableId].LabelName}
                                         chipStyle='outlined'
                                     />
-                                </View>
-                            ))
-                        }
+                                ))
+                            }
+                        </View>
                     </Card>
-
                 </View>
             </ScrollView>
         );

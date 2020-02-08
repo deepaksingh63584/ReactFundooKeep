@@ -50,13 +50,17 @@ export async function addLabelsInNote(notekey, labelId, labelName) {
 
 export async function removeLabelsInNote(NoteKey, labelKey, labelNoteKey) {
     const uid = await AsyncStorage.getItem('uid')
+    console.log('labelkeyremove------', labelKey);
     labelsdataBase.database().ref('/users/' + uid + '/Notes/' + NoteKey + '/NoteLabel/' + labelKey + '/').remove();
     labelsdataBase.database().ref('/users/' + uid + '/Label/' + labelKey + '/LabelNote/' + labelNoteKey + '/').remove();
 }
 
 export async function getLabelFromNote(labelKey, callback) {
+    // console.log('labelkey------', labelKey);
     const uid = await AsyncStorage.getItem('uid')
     labelsdataBase.database().ref('/users/' + uid + '/Label/' + labelKey + '/LabelNote/').on('value', (snapshot) => {
+        // console.log('labelkey------', labelKey);
+        // console.log(snapshot, '==--firebase');
         callback(snapshot.val())
     })
 }
@@ -64,6 +68,13 @@ export async function getLabelFromNote(labelKey, callback) {
 export async function getDesireNote(NoteId, callback) {
     const uid = await AsyncStorage.getItem('uid')
     labelsdataBase.database().ref('/users/' + uid + '/Notes/' + NoteId + '/').on('value', (snapshot) => {
+        callback(snapshot.val())
+    })
+}
+
+export async function getAllNotes(callback) {
+    const uid = await AsyncStorage.getItem('uid')
+    labelsdataBase.database().ref('/users/' + uid + '/Notes/').on('value', (snapshot) => {
         callback(snapshot.val())
     })
 }

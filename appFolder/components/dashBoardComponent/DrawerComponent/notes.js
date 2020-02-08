@@ -31,6 +31,8 @@ export default class Notes extends React.Component {
 
     componentDidMount = () => {
         fetchNotesFromFireBase((snapObj) => {
+            // console.log("fetchNotesFromFireBase notes:", snapObj);
+
             let pinNotes = []
             let unPinNotes = []
             let pinCount = 0
