@@ -40,6 +40,7 @@ export default class Archive extends React.Component {
                     this.state.Notes.length === 0 ? null :
                         <FlatList
                             data={this.state.Notes}
+                            ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>Archive: {this.state.Notes.length}</Text>}
                             renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
                         />
                 }

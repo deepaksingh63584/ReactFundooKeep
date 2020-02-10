@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Text } from 'react-native';
 import OtherTopBar from '../OtherTopBar';
 import ListViewNotes from '../../notesComponents/ListViewNotes'
 import { fetchNotesFromFireBase } from '../../dashbordFirebaseDB';
@@ -39,6 +39,7 @@ export default class Reminder extends React.Component {
                     this.state.Notes.length === 0 ? null :
                         <FlatList
                             data={this.state.Notes}
+                            ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>Reminder: {this.state.Notes.length}</Text>}
                             renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} />}
                         />
                 }

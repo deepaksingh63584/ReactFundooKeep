@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Image, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native';
 import TopBar from "../topAppBar"
 import BottomBar from '../bottomAppbar'
 import ListViewNotes from '../../notesComponents/ListViewNotes'
@@ -16,7 +16,6 @@ export default class Notes extends React.Component {
             pinCount: 0,
             unPinCount: 0,
             list: 1,
-
         };
     }
 
@@ -25,36 +24,28 @@ export default class Notes extends React.Component {
             listView: !this.state.listView,
 
         })
-        console.log("value if kist vieee==>", this.state.listView);
-
+        // console.log("value if kist vieee==>", this.state.listView);
     }
 
     componentDidMount = () => {
         fetchNotesFromFireBase((snapObj) => {
             // console.log("fetchNotesFromFireBase notes:", snapObj);
-
             let pinNotes = []
             let unPinNotes = []
-            let pinCount = 0
-            let unPinCount = 0
             if (snapObj !== null && snapObj !== undefined) {
                 Object.getOwnPropertyNames(snapObj).map((key, index) => {
                     snapObj[key].noteId === key
                     if (snapObj[key].PinStatus === true && snapObj[key].Archive === false && snapObj[key].Trash === false) {
                         pinNotes.push(snapObj[key])
-                        pinNotes[pinCount++].noteId = key;
                     }
                     else if (snapObj[key].PinStatus === false && snapObj[key].Archive === false && snapObj[key].Trash === false) {
                         unPinNotes.push(snapObj[key])
-                        unPinNotes[unPinCount++].noteId = key;
                     }
                 })
             }
             this.setState({
                 pinNotes: pinNotes.reverse(),
                 unPinNotes: unPinNotes.reverse(),
-                pinCount: pinCount,
-                unPinCount: unPinCount,
             }, () => {
                 // console.log('pinNotes' + pinNotes);
                 // console.log('UNpinned Notes' + JSON.stringify(unPinNotes));
@@ -94,13 +85,13 @@ export default class Notes extends React.Component {
                 }
                 <ScrollView>
                     <View>
-                        <Text style={{ padding: 10, fontSize: 18 }}>PINNED:</Text>
                         {
                             this.state.pinNotes.length !== 0 ?
                                 <FlatList
                                     numColumns={this.state.listView ? 1 : 2}
                                     data={this.state.pinNotes}
                                     key={this.state.listView ? 1 : 2}
+                                    ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>PINNED: {this.state.pinNotes.length}</Text>}
                                     renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
                                 />
                                 :
@@ -108,13 +99,13 @@ export default class Notes extends React.Component {
                         }
                     </View>
                     <View>
-                        <Text style={{ padding: 10, fontSize: 18 }}>OTHERS:</Text>
                         {
                             this.state.unPinNotes.length === 0 ? null :
                                 <FlatList
                                     numColumns={this.state.listView ? 1 : 2}
                                     data={this.state.unPinNotes}
                                     key={this.state.listView ? 1 : 2}
+                                    ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>OTHERS: {this.state.unPinNotes.length}</Text>}
                                     renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
                                 />
                         }

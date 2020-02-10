@@ -2,41 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import { getAllNotes } from '../LabelsDataBase'
+import ListViewNotes from '../notesComponents/ListViewNotes'
 
 
 function SearchNote(props) {
     const [search, setSearch] = useState('')
     const [notes, setNotes] = useState([])
-
-    search = text => {
-        console.log(text);
-    };
-    clear = () => {
-        this.search.clear();
-    };
+    const [data, setData] = useState([])
 
     useEffect(() => {
-        getAllNotes(() => {
+        let notes = []
+        getAllNotes(async (snapObj) => {
             if (snapObj !== null && snapObj !== undefined) {
                 Object.getOwnPropertyNames(snapObj).map((key, index) => {
-                    snapObj[key].noteId === key
+                    snapObj[key].noteId = key
                     notes.push(snapObj[key])
                 }
                 )
             }
-            setNotes(reverse());
+            setNotes(notes.reverse());
         })
     }, [search])
 
     const SearchFilterFunction = (text) => {
-        const notesArray = (data).filter((item) => {
+        const notesA = (notes).filter((item) => {
             const itemTitle = item.Title ? item.Title.toUpperCase() : ''.toUpperCase();
             const itemContent = item.Content ? item.Content.toUpperCase() : ''.toUpperCase();
             const itemData = text.toUpperCase();
             return itemTitle.indexOf(itemData) > -1 || itemContent.indexOf(itemData) > -1
         });
         setSearch(text)
-        setNotes(notesArray)
+        setData(notesA)
     }
 
     return (
@@ -56,14 +52,18 @@ function SearchNote(props) {
             </Appbar>
 
             <View>
-                <FlatList
-                    renderItem={
-                        ({ item }) => <NoteCard
-                            Item={item}
-                            Navigate={props}
-                        />
-                    }
-                />
+                {
+                    <FlatList
+                        data={data}
+                        ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>Match Result : {data.length}</Text>}
+                        renderItem={
+                            ({ item }) => <ListViewNotes
+                                {...item}
+                                notesProps={props} />
+                        }
+                    />
+
+                }
             </View>
 
         </View>
@@ -72,6 +72,11 @@ function SearchNote(props) {
 }
 
 export default SearchNote;
+
+
+
+
+
 
 // import React from 'react';
 // import { View, Text, TextInput, FlatList } from 'react-native';

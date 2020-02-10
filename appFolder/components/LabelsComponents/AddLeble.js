@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, TextInput, Text, FlatList } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
-
 import { createLabel, getLabel } from '../LabelsDataBase';
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import CheckBoxList from './CheckBoxList';
 
 export default class AddLabel extends React.Component {

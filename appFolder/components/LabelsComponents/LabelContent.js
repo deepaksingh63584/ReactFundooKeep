@@ -87,6 +87,7 @@ export default class LabelContent extends Component {
                                 numColumns={this.state.listView ? 1 : 2}
                                 key={this.state.listView ? 1 : 2}
                                 data={this.state.notes}
+                                ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>Label: {this.state.notes.length}</Text>}
                                 renderItem={({ item }) =>
                                     <ListViewNotes
                                         {...item}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
 import { Avatar } from 'react-native-paper';
+import Profile from './Profile'
 
 
 const grid = require('../../assets/grid.png');
@@ -56,10 +57,7 @@ export default class TopAppBar extends Component {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity
-                        onPress={() => alert('profileSignOut')}>
-                        <Avatar.Text size={42} label="D" style={{ marginTop: -10 }} />
-                    </TouchableOpacity>
+                    <Profile {...this.props} />
                 </View>
             </View >
         );

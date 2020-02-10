@@ -48,6 +48,8 @@ export async function updateNotesFromFireBase(key, Title, Content, PinStatus, Ar
     });
 }
 
+
+
 export async function trashAndRestore(key, trash) {
     // console.log(key);
     // console.log(status);

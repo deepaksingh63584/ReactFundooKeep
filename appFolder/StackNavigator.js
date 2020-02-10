@@ -6,6 +6,7 @@ import 'react-native-gesture-handler';
 import CreateNote from './components/notesComponents/NoteCard';
 import AddLabel from './components/LabelsComponents/AddLeble';
 import SearchNote from './components/dashBoardComponent/SearchNote';
+import Profile from './components/dashBoardComponent/Profile';
 
 
 export const StackNavigator = createStackNavigator({
@@ -16,6 +17,7 @@ export const StackNavigator = createStackNavigator({
     CreateNote: { screen: CreateNote, navigationOptions: { header: null } },
     AddLabel: { screen: AddLabel, navigationOptions: { header: null } },
     SearchNote: { screen: SearchNote, navigationOptions: { header: null } },
+    Profile: { screen: Profile, navigationOptions: { header: null } },
 },
     {
         initialRouteName: 'LogIn'

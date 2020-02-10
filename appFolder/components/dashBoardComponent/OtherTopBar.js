@@ -33,7 +33,7 @@ export default class OtherTopBar extends Component {
                 </View>
                 <View>
                     <TouchableOpacity
-                        onPress={() => alert('Searching Notes')}>
+                        onPress={() => { this.props.navigation.navigate('SearchNote') }}>
                         <MaterialIcon name="search" size={30} style={{ padding: 14, fontSize: 25, marginTop: -15, marginRight: 10 }} />
                     </TouchableOpacity>
                 </View>

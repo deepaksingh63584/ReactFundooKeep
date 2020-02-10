@@ -52,3 +52,27 @@ export function forgatePassword(emailid, thencallback, catchcallback) {
             catchcallback(errors)
         });
 }
+
+export function signOut(callback) {
+    logInFireBase.auth().signOut().then(() => {
+
+        callback()
+    })
+        .catch()
+}
+
+export async function fetchUserData(callback) {
+    const uid = await AsyncStorage.getItem('uid')
+    logInFireBase.database().ref('/users/' + uid + '/personalData/').on('value', (snapshot) => {
+        let snapObj = snapshot.val();
+        callback(snapObj)
+    })
+}
+
+export async function storeProfileImage(imageSource) {
+    const uid = await AsyncStorage.getItem('uid')
+    logInFireBase.database().ref('/users/' + uid + '/personalData/').update({
+        ProfileImage: imageSource
+    })
+}
+
