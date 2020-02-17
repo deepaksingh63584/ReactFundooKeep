@@ -34,7 +34,7 @@ export default class Notes extends React.Component {
             let unPinNotes = []
             if (snapObj !== null && snapObj !== undefined) {
                 Object.getOwnPropertyNames(snapObj).map((key, index) => {
-                    snapObj[key].noteId === key
+                    snapObj[key].noteId = key
                     if (snapObj[key].PinStatus === true && snapObj[key].Archive === false && snapObj[key].Trash === false) {
                         pinNotes.push(snapObj[key])
                     }
@@ -58,6 +58,8 @@ export default class Notes extends React.Component {
 
     render() {
         // console.log('ahdjkjhjZKJjnk', this.props);
+        // const date = new Date(Date.now())
+        // console.log(date, '              date')
         return (
             <View style={{ height: "100%", width: "100%" }}>
                 <View>

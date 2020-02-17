@@ -43,9 +43,7 @@ export default class Profile extends Component {
                 userObj: snapObj
             })
         })
-
     }
-
 
     render() {
         return (

@@ -35,9 +35,7 @@ export default class LabelContent extends Component {
         getLabelFromNote(this.state.lableId, async (snapObj) => {
             let noteIds = [];
             var NotesArray = [];
-
             if (snapObj !== null && snapObj !== undefined) {
-
                 Object.getOwnPropertyNames(snapObj).map((key, index) => {
                     if (snapObj[key].NoteId !== null) {
                         noteIds.push(snapObj[key].NoteId)

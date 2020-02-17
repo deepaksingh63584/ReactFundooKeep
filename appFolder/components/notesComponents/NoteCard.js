@@ -8,12 +8,13 @@ import BottemPopUp from './BottomPopUp'
 import SetReminder from './SetReminder';
 import moment from 'moment';
 import { Chip } from 'material-bread';
+import pushNotification from 'react-native-push-notification';
 
 export default class GridViewNotes extends React.Component {
     constructor(props) {
         super(props);
         this.Item = this.props.navigation.getParam('item', null)
-        // console.log("item un construtor:", this.Item);
+        //console.log("item un construtor:", this.Item);
         this.state = {
             noteTitle: this.Item === null ? '' : this.Item.Title,
             noteContent: this.Item === null ? '' : this.Item.Content,
@@ -25,8 +26,9 @@ export default class GridViewNotes extends React.Component {
             reminderTime: this.Item === null ? '' : this.Item.reminderTime,
             Label: this.Item === null ? '' : this.Item.Label,
             noteId: this.Item === null ? '' : this.Item.noteId,
+            dateTime: ''
         };
-        console.log('NoteId in Notecard', this.state.noteId);
+        // console.log('NoteId in Notecard', this.state.noteId);
     }
 
     colorChange = (color) => {
@@ -43,6 +45,11 @@ export default class GridViewNotes extends React.Component {
     pushNotes = () => {
         if (this.Item === null) {
             if (this.state.noteTitle !== '' || this.state.noteContent !== '') {
+                pushNotification.localNotificationSchedule({
+                    message: this.state.noteTitle,
+                    subText: this.state.noteContent,
+                    date: this.state.dateTime
+                });
                 setNoteInFireBase(
                     this.state.noteTitle,
                     this.state.noteContent,
@@ -60,6 +67,11 @@ export default class GridViewNotes extends React.Component {
             }
         }
         else {
+            pushNotification.localNotificationSchedule({
+                message: this.state.noteTitle,
+                subText: this.state.noteContent,
+                date: this.state.dateTime
+            });
             updateNotesFromFireBase(
                 this.Item.noteId,
                 this.state.noteTitle,
@@ -77,7 +89,9 @@ export default class GridViewNotes extends React.Component {
     }
 
     render() {
-        // console.log('iiiiiiiiiiiiiiiiiii    ' + this.Item)
+        // console.log('iiiiiiiiiiiiiiiiiii    ', this.Item)
+        // console.log('date and time --', this.state.dateTime);
+
         return (
             <View style={[styles.mainNotecard, { backgroundColor: this.state.setColor }]}>
                 <View style={styles.topFooter}>
@@ -97,11 +111,12 @@ export default class GridViewNotes extends React.Component {
                             </TouchableOpacity>
 
                             <SetReminder
-                                getDateTime={(date, time) => this.setState({
+                                getDateTime={(date, time, dateTime) => this.setState({
                                     reminderDate: moment(date).format(),
                                     reminderTime: time,
+                                    dateTime: dateTime
                                 }, () =>
-                                    console.log(date + ': kjk'))
+                                    console.log(this.state.dateTime + '  :     kjk'))
                                 }
                             />
 

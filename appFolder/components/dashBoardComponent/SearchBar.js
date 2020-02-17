@@ -25,7 +25,6 @@ export default class SreachBar extends React.Component {
                     value={search}
                 />
             </View>
-
         );
     }
 }

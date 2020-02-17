@@ -17,7 +17,7 @@ export default class BottomPopUp extends Component {
 
     render() {
         // console.log('sgdfadfuhj', this.props);
-        console.log('NoteId==gsfdg==', this.props.noteId);
+        // console.log('NoteId==gsfdg==', this.props.noteId);
 
         return (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

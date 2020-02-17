@@ -15,8 +15,12 @@ export default class SetReminder extends Component {
             visible: false,
             datePicker: false,
             timePicker: false,
-            reminderDate: moment().format('MMM DD, YYYY'),
-            reminderTime: moment().format('h:mm a')
+            reminderDate: new Date(),
+            reminderTime: new Date(),
+            date: '',
+            time: '',
+            dateTime: '',
+            displayDateTime: ''
 
         };
     }
@@ -26,6 +30,16 @@ export default class SetReminder extends Component {
     }
     handleClose = () => {
         this.setState({ visible: false })
+    }
+
+    handleDateTime = () => {
+        let displayDate = this.state.date + this.state.time
+        let displayDateTime = new Date(displayDate);
+        // console.log(displayDateTime, 'sdasfd date time');
+        this.setState({ displayDateTime: displayDateTime }, () => {
+            this.props.getDateTime(moment(this.state.reminderDate).format('MMM DD, YYYY'),
+                moment(this.state.reminderTime).format('h:mm a'), this.state.displayDateTime)
+        })
     }
 
 
@@ -39,10 +53,22 @@ export default class SetReminder extends Component {
             <DateTimePicker
                 isVisible={this.state.datePicker}
                 mode='date'
-                onConfirm={(date) => this.setState({
-                    reminderDate: moment(date).format('MMM DD, YYYY'),
-                    datePicker: false
-                })}
+                onConfirm={(date) =>
+                    // console.log('date on render', date),
+                    this.setState({
+                        reminderDate: date,
+                        datePicker: false,
+
+                    }, () => {
+                        let dateData = JSON.stringify(this.state.reminderDate)
+                        let date1 = dateData.slice(1, 11)
+                        // console.log(date1, '--date 1--');
+                        this.setState({
+                            date: date1
+                        })
+                    })
+
+                }
                 onCancel={() => this.setState({ datePicker: false })}
             />
         );
@@ -51,10 +77,19 @@ export default class SetReminder extends Component {
             <DateTimePicker
                 isVisible={this.state.timePicker}
                 mode='time'
-                onConfirm={(time) => this.setState({
-                    reminderTime: moment(time).format('h:mm a'),
-                    timePicker: false
-                })}
+                onConfirm={(time) =>
+                    // console.log('time on render', time),
+                    this.setState({
+                        reminderTime: time,
+                        timePicker: false
+                    }, () => {
+                        let timeData = JSON.stringify(this.state.reminderTime)
+                        let time1 = timeData.slice(11, 25)
+                        // console.log(time1, '--time 1--');
+                        this.setState({
+                            time: time1
+                        })
+                    })}
                 onCancel={() => this.setState({ timePicker: false })}
             />
         );
@@ -74,7 +109,7 @@ export default class SetReminder extends Component {
                     >
                         <View style={styles.dateStyle}>
                             <Text style={{ fontSize: 18 }}>
-                                {this.state.reminderDate}
+                                {moment(this.state.reminderDate).format('MMM DD, YYYY')}
                             </Text>
                             <View>
                                 <MaterialIcon
@@ -91,7 +126,7 @@ export default class SetReminder extends Component {
                     >
                         <View style={styles.dateStyle}>
                             <Text style={{ fontSize: 18 }}>
-                                {this.state.reminderTime}
+                                {moment(this.state.reminderTime).format('h:mm a')}
                             </Text>
                             <View>
                                 <MaterialIcon
@@ -116,8 +151,8 @@ export default class SetReminder extends Component {
                             title="Save"
                             type="clear"
                             onPress={() => {
-                                this.props.getDateTime(this.state.reminderDate, this.state.reminderTime)
-                                this.handleClose()
+                                this.handleDateTime(),
+                                    this.handleClose()
                             }
                             }
                         />
@@ -167,3 +202,13 @@ const styles = StyleSheet.create({
     }
 
 });
+
+
+
+
+
+
+// PushNotification.localNotificationSchedule({
+        //     message: "Local notofication push message", // (required)
+        //     date: new Date(Date.now() + 60 * 1000) // in 60 secs
+        // });

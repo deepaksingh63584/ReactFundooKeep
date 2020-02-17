@@ -1,11 +1,8 @@
 import dashboardFireBase from './firebase';
 import AsyncStorage from '@react-native-community/async-storage'
-import Trash from './dashBoardComponent/DrawerComponent/trash';
-
-
 
 export async function setNoteInFireBase(Title, Content, PinStatus, Archive, Color, Trash, date, time, callback) {
-    // console.log('uf : ' + uid);
+    console.log('uf : ' + uid);
     // console.log('date- ', date, 'time- ', time);
     const uid = await AsyncStorage.getItem('uid')
     dashboardFireBase.database().ref('/users/' + uid + '/Notes/').push({
@@ -33,6 +30,7 @@ export async function fetchNotesFromFireBase(callback) {
 
 export async function updateNotesFromFireBase(key, Title, Content, PinStatus, Archive, Color, Trash, date, time, callback) {
     const uid = await AsyncStorage.getItem('uid')
+    // if (labelValue !== "" && labelValue === undefined || reminderDate !== "" && reminderDate === undefined) {
     dashboardFireBase.database().ref('/users/' + uid + '/Notes/' + key + '/').update({
         Title: Title,
         Content: Content,
@@ -46,6 +44,7 @@ export async function updateNotesFromFireBase(key, Title, Content, PinStatus, Ar
         console.log(success);
         callback()
     });
+    // }
 }
 
 
