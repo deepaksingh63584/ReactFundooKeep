@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
 import { AppbarBottom } from 'material-bread';
 
-
 export default class BottomAppBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            visible: false,
+            fileUri: null,
+            userObj: null
+        };
+    }
+
     render() {
         return (
             <View style={{ bottom: 0, width: '100%', position: 'absolute', display: 'flex', flexDirection: "column" }}>
@@ -45,10 +53,12 @@ export default class BottomAppBar extends Component {
                             />
                         </View>
                         <View>
-                            <Image
-                                style={{ height: 28, width: 28, marginLeft: 15 }}
-                                source={require('../../assets/crop_original.png')}
-                            />
+                            <TouchableOpacity>
+                                <Image
+                                    style={{ height: 28, width: 28, marginLeft: 15 }}
+                                    source={require('../../assets/crop_original.png')}
+                                />
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View >

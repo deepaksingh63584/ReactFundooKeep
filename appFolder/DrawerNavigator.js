@@ -9,6 +9,8 @@ import editLabel from './components/dashBoardComponent/DrawerComponent/EditLabel
 import DrawerContent from "./components/dashBoardComponent/DrawerContent";
 import LabelContent from './components/LabelsComponents/LabelContent';
 import ChartPage from './components/dashBoardComponent/DrawerComponent/ChartPage'
+import DragableNotes from './components/dashBoardComponent/DrawerComponent/DragableNotes'
+import ImageLoading from './components/ExtraTaskComponet/ImageLoading'
 
 export const DrawerNavigator = createDrawerNavigator({
     Notes: {
@@ -31,6 +33,12 @@ export const DrawerNavigator = createDrawerNavigator({
     },
     ChartPage: {
         screen: ChartPage
+    },
+    DragableNotes: {
+        screen: DragableNotes
+    },
+    ImageLoading: {
+        screen: ImageLoading
     }
 },
     {

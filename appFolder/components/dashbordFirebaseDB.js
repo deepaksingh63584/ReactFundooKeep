@@ -1,7 +1,7 @@
 import dashboardFireBase from './firebase';
 import AsyncStorage from '@react-native-community/async-storage'
 
-export async function setNoteInFireBase(Title, Content, PinStatus, Archive, Color, Trash, date, time, callback) {
+export async function setNoteInFireBase(Title, Content, PinStatus, Archive, Color, Trash, date, time, NoteImage, callback) {
     console.log('uf : ' + uid);
     // console.log('date- ', date, 'time- ', time);
     const uid = await AsyncStorage.getItem('uid')
@@ -14,6 +14,7 @@ export async function setNoteInFireBase(Title, Content, PinStatus, Archive, Colo
         Color: Color,
         reminderDate: date,
         reminderTime: time,
+        NoteImage: NoteImage
     }).then((success) => {
         callback()
     });

@@ -1,31 +1,37 @@
-import React from 'react';
-import { View, Text, FlatList, ActivityIndicator, ScrollView } from 'react-native';
+import React, { Component } from "react";
 import TopBar from "../topAppBar"
-import BottomBar from '../bottomAppbar'
-import ListViewNotes from '../../notesComponents/ListViewNotes'
+import { View, TouchableOpacity, Text, ActivityIndicator, ScrollView } from "react-native";
+import DRAGgableFlatList from "react-native-draggable-flatlist";
 import { fetchNotesFromFireBase } from '../../dashbordFirebaseDB';
+import ListViewNotes from '../../notesComponents/ListViewNotes'
 
-export default class Notes extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            pinNotes: [],
-            unPinNotes: [],
-            loading: true,
-            listView: true,
-            pinCount: 0,
-            unPinCount: 0,
-            list: 1,
-            dragData: ''
-        };
-    }
+const pinNotes = [pinNotes].map((d, index) => ({
+    key: `item-${index}`,
+    dragNotes: index,
+}));
+
+const unPinNotes = [unPinNotes].map((d, index) => ({
+    key: `item-${index}`,
+    dragNotes: index,
+}));
+
+class DRAGgableNotes extends Component {
+    state = {
+        pinNotes: [],
+        unPinNotes: [],
+        loading: true,
+        listView: true,
+        pinCount: 0,
+        unPinCount: 0,
+        list: 1,
+        data: pinNotes,
+    };
 
     viewChange = async () => {
         await this.setState({
             listView: !this.state.listView,
 
         })
-        // console.log("value if kist vieee==>", this.state.listView);
     }
 
     componentDidMount = () => {
@@ -48,8 +54,6 @@ export default class Notes extends React.Component {
                 pinNotes: pinNotes.reverse(),
                 unPinNotes: unPinNotes.reverse(),
             }, () => {
-                // console.log('pinNotes' + pinNotes);
-                // console.log('UNpinned Notes' + JSON.stringify(unPinNotes));
                 this.setState({
                     loading: false,
                 })
@@ -58,9 +62,7 @@ export default class Notes extends React.Component {
     }
 
     render() {
-        // console.log('ahdjkjhjZKJjnk', this.props);
-        // const date = new Date(Date.now())
-        // console.log(date, '              date')
+
         return (
             <View style={{ height: "100%", width: "100%" }}>
                 <View>
@@ -69,7 +71,7 @@ export default class Notes extends React.Component {
                         viewChange={this.viewChange}
                     />
                 </View>
-                <View style={{ height: "88%", width: "100%" }}>
+                <View style={{ flex: 1, height: "90%", width: "100%" }}>
                     {
                         this.state.loading === true ?
                             <ActivityIndicator
@@ -91,12 +93,23 @@ export default class Notes extends React.Component {
                         <View>
                             {
                                 this.state.pinNotes.length !== 0 ?
-                                    <FlatList
+                                    <DRAGgableFlatList
                                         numColumns={this.state.listView ? 1 : 2}
                                         data={this.state.pinNotes}
                                         key={this.state.listView ? 1 : 2}
-                                        ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>PINNED: {this.state.pinNotes.length}</Text>}
-                                        renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
+                                        keyExtractor={(item, index) => `draggable-item-${item.key}`}
+                                        ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>DRAG PINNED: {this.state.pinNotes.length}</Text>}
+                                        renderItem={({ item, index, drag, isActive }) =>
+                                            <TouchableOpacity
+                                                style={{
+                                                    backgroundColor: isActive ? "yellow" : item.backgroundColor,
+                                                }}
+                                                onLongPress={drag}
+                                            >
+                                                <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />
+                                                {item.dragNotes}
+                                            </TouchableOpacity>}
+                                        onDragEnd={({ data }) => this.setState({ data })}
                                     />
                                     :
                                     null
@@ -105,22 +118,30 @@ export default class Notes extends React.Component {
                         <View>
                             {
                                 this.state.unPinNotes.length === 0 ? null :
-                                    <FlatList
+                                    <DRAGgableFlatList
                                         numColumns={this.state.listView ? 1 : 2}
                                         data={this.state.unPinNotes}
                                         key={this.state.listView ? 1 : 2}
-                                        ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>OTHERS: {this.state.unPinNotes.length}</Text>}
-                                        renderItem={({ item }) => <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />}
+                                        keyExtractor={(item, index) => `draggable-item-${item.key}`}
+                                        ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>DRAG OTHERS: {this.state.unPinNotes.length}</Text>}
+                                        renderItem={({ item, index, drag, isActive }) =>
+                                            <TouchableOpacity
+                                                style={{
+                                                    backgroundColor: isActive ? "yellow" : item.backgroundColor,
+                                                }}
+                                                onLongPress={drag}
+                                            >
+                                                <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />
+                                            </TouchableOpacity>}
+                                        onDragEnd={({ data }) => this.setState({ data })}
                                     />
                             }
                         </View>
-
                     </ScrollView>
                 </View>
-                <View style={{ bottom: 0, width: '100%', position: 'absolute' }}>
-                    <BottomBar {...this.props} />
-                </View>
-            </View >
+            </View>
         );
     }
 }
+
+export default DRAGgableNotes;

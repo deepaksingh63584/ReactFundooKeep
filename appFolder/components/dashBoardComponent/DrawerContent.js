@@ -134,6 +134,24 @@ export default class DrawerContent extends React.Component {
                     </View>
                 </TouchableHighlight>
 
+                <TouchableHighlight underlayColor='#feefc3'
+                    onPress={() => this.props.navigation.navigate('DragableNotes')}>
+                    <View
+                        style={styles.iconButton}>
+                        <AntIcon name="dropbox" size={30} />
+                        <Text style={styles.textField}>Drag & Drop</Text>
+                    </View>
+                </TouchableHighlight>
+
+                <TouchableHighlight underlayColor='#feefc3'
+                    onPress={() => this.props.navigation.navigate('ImageLoading')}>
+                    <View
+                        style={styles.iconButton}>
+                        <MaterialCommunityIcon name="folder-multiple-image" size={30} />
+                        <Text style={styles.textField}>Image Loading</Text>
+                    </View>
+                </TouchableHighlight>
+
             </ScrollView>
         );
     }
@@ -151,7 +169,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 15,/*  */
         marginBottom: 15,
-        marginLeft: 15
+        marginLeft: 15,
+        opacity: .75
     },
     textField: {
         display: 'flex',

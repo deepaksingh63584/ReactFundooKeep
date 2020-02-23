@@ -76,3 +76,18 @@ export async function storeProfileImage(imageSource) {
     })
 }
 
+export async function fetchNotesData(callback) {
+    const uid = await AsyncStorage.getItem('uid')
+    logInFireBase.database().ref('/users/' + uid + '/Notes/' + notekey + '/').on('value', (snapshot) => {
+        let snapObj = snapshot.val();
+        callback(snapObj)
+    })
+}
+
+export async function storeNotesImage(imageSource) {
+    const uid = await AsyncStorage.getItem('uid')
+    logInFireBase.database().ref('/users/' + uid + '/Notes/' + notekey + '/').update({
+        NoteImage: imageSource
+    })
+}
+

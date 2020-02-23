@@ -24,7 +24,8 @@ export default class ListViewNotes extends React.Component {
             <ScrollView>
                 <View style={{ height: '100%', width: '100%' }}>
                     <Card style={[this.props.listView ? styles.cardStyle2 : styles.cardStyle, { backgroundColor: this.props.Color }]}
-                        onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}>
+                        onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}
+                    >
                         <Text style={styles.cardTitle}>{this.props.Title}</Text>
                         <Text style={{ padding: 10 }}>{this.props.Content}</Text>
                         <View style={{ padding: 12, flexWrap: 'wrap', flexDirection: 'row', }}>
@@ -47,8 +48,8 @@ export default class ListViewNotes extends React.Component {
                             }
                         </View>
                     </Card>
-                </View>
-            </ScrollView>
+                </View >
+            </ScrollView >
         );
     }
 }

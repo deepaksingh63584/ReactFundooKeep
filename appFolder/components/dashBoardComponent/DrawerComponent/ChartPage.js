@@ -12,6 +12,7 @@ export default class ChartPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            notes: [],
             notesCount: {
                 pinNotes: 0,
                 unPinNotes: 0,
@@ -19,31 +20,30 @@ export default class ChartPage extends Component {
                 archiveNotes: 0,
                 trashNotes: 0,
             },
-            datasets1: null,
-            datasets2: null,
         };
         // console.log('all Props on chart page:', this.props);
 
     }
 
     getAllNotes = (callback) => {
+        console.log('vasfdjhasdgjhgcuiasjcb zxbcvfyzxjhcfyi gukjxkaspidolzx,m kpioj');
         fetchNotesFromFireBase((snapObj) => {
-            let Notes = []
-            // console.log("fetchNotesFromFireBase notes:", snapObj);
+            let notesCount = []
+            console.log("fetchNotesFromFireBase notes:", snapObj);
             if (snapObj !== null && snapObj !== undefined) {
-                Object.keys(snapObj).map((key) => {
+                Object.getOwnPropertyNames(snapObj).map((key, index) => {
                     snapObj[key].noteId = key
-                    Notes.push(snapObj[key])
+                    notesCount.push(snapObj[key])
                 })
-                callback(Notes)
+                callback(notesCount)
             }
         })
     }
 
     componentDidMount = () => {
-        this.getAllNotes(key, (snapObj) => {
+        this.getAllNotes((snapObj) => {
             let notesCount = {}
-            notesCount['allNotes'] = Notes.length,
+            notesCount['allNotes'] = notesCount.length,
                 notesCount['pinNotes'] = 0,
                 notesCount['unPinNotes'] = 0,
                 notesCount['archiveNotes'] = 0,
@@ -89,7 +89,7 @@ export default class ChartPage extends Component {
             ]
         };
 
-        const data2 = [
+        const pieData = [
             {
                 name: "All Notes",
                 count: this.state.notesCount.allNotes,
@@ -155,67 +155,64 @@ export default class ChartPage extends Component {
         return (
             <View>
                 <TrashTopBar {...this.props} />
-                <ScrollView>
-                    <Text style={{ fontSize: 24 }}>  Line Chart</Text>
-                    < LineChart
-                        data={data}
-                        width={screenWidth}
-                        svg={{ stroke: 'rgb(134, 65, 244)' }}
-                        height={240}
-                        chartConfig={{
-                            backgroundColor: "#e26a00",
-                            backgroundGradientFrom: "#001a0d",
-                            backgroundGradientTo: "#ffa726",
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            },
-                            propsForDots: {
-                                r: "6",
-                                strokeWidth: "2",
-                                stroke: "#ffa726"
-                            }
-                        }}
-                        bezier
-                        style={{
-                            marginVertical: 8,
+                <Text style={{ fontSize: 24 }}>  Line Chart</Text>
+                < LineChart
+                    data={data}
+                    width={screenWidth}
+                    svg={{ stroke: 'rgb(134, 65, 244)' }}
+                    height={240}
+                    chartConfig={{
+                        backgroundColor: "#e26a00",
+                        backgroundGradientFrom: "#001a0d",
+                        backgroundGradientTo: "#ffa726",
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {
                             borderRadius: 16
-                        }}
+                        },
+                        propsForDots: {
+                            r: "6",
+                            strokeWidth: "2",
+                            stroke: "#ffa726"
+                        }
+                    }}
+                    bezier
+                    style={{
+                        marginVertical: 8,
+                        borderRadius: 16
+                    }}
 
-                    />
-                    <Text style={{ fontSize: 24 }}>  Pie Chart</Text>
-                    <PieChart
-                        data={data2}
-                        width={screenWidth}
-                        height={245}
-                        chartConfig={chartConfig}
-                        accessor="count"
-                        backgroundColor="transparent"
-                        paddingLeft="15"
-                        absolute
-                    />
+                />
+                <Text style={{ fontSize: 24 }}>  Pie Chart</Text>
+                <PieChart
+                    data={pieData}
+                    width={screenWidth}
+                    height={245}
+                    chartConfig={chartConfig}
+                    accessor="count"
+                    backgroundColor="transparent"
+                    paddingLeft="15"
+                    absolute
+                />
 
-                    <Text style={{ fontSize: 24 }}>  Bar Chart</Text>
-                    <BarChart
-                        data={data}
-                        width={screenWidth}
-                        height={240}
-                        chartConfig={{
-                            backgroundGradientFrom: "#001a0d",
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-
-                            },
-                        }}
-                        bezier
-                        style={{
-                            marginVertical: 8,
+                {/* <Text style={{ fontSize: 24 }}>  Bar Chart</Text> */}
+                <BarChart
+                    data={data}
+                    width={screenWidth}
+                    height={240}
+                    chartConfig={{
+                        backgroundGradientFrom: "#001a0d",
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                        style: {
                             borderRadius: 16
-                        }}
-                    />
-                </ScrollView>
+                        },
+                    }}
+                    bezier
+                    style={{
+                        marginVertical: 8,
+                        borderRadius: 16
+                    }}
+                />
             </View >
         );
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -7,10 +7,12 @@ import { setNoteInFireBase, updateNotesFromFireBase, trashAndRestore } from '../
 import BottemPopUp from './BottomPopUp'
 import SetReminder from './SetReminder';
 import moment from 'moment';
-import { Chip } from 'material-bread';
+import { Chip, Dialog } from 'material-bread';
 import pushNotification from 'react-native-push-notification';
+import ImagePicker from 'react-native-image-picker';
+import { fetchNotesData, storeNotesImage } from '../logInComponents/logInFireBase'
 
-export default class GridViewNotes extends React.Component {
+export default class NoteCard extends React.Component {
     constructor(props) {
         super(props);
         this.Item = this.props.navigation.getParam('item', null)
@@ -22,6 +24,7 @@ export default class GridViewNotes extends React.Component {
             archive: this.Item === null ? false : this.Item.Archive,
             setColor: this.Item === null ? '#ffffff' : this.Item.Color,
             Trash: this.Item === null ? false : this.Item.Trash,
+            NoteImage: this.Item === null ? '' : this.Item.NoteImage,
             reminderDate: this.Item === null ? '' : this.Item.reminderDate,
             reminderTime: this.Item === null ? '' : this.Item.reminderTime,
             Label: this.Item === null ? '' : this.Item.Label,
@@ -45,11 +48,6 @@ export default class GridViewNotes extends React.Component {
     pushNotes = () => {
         if (this.Item === null) {
             if (this.state.noteTitle !== '' || this.state.noteContent !== '') {
-                pushNotification.localNotificationSchedule({
-                    message: this.state.noteTitle,
-                    subText: this.state.noteContent,
-                    date: this.state.dateTime
-                });
                 setNoteInFireBase(
                     this.state.noteTitle,
                     this.state.noteContent,
@@ -57,8 +55,14 @@ export default class GridViewNotes extends React.Component {
                     this.state.archive,
                     this.state.setColor,
                     this.state.Trash,
+                    this.state.NoteImage,
                     this.state.reminderDate,
                     this.state.reminderTime, () => {
+                        pushNotification.localNotificationSchedule({
+                            message: this.state.noteTitle,
+                            subText: this.state.noteContent,
+                            date: this.state.dateTime
+                        });
                         this.props.navigation.navigate('Notes')
                     })
             }
@@ -67,11 +71,6 @@ export default class GridViewNotes extends React.Component {
             }
         }
         else {
-            pushNotification.localNotificationSchedule({
-                message: this.state.noteTitle,
-                subText: this.state.noteContent,
-                date: this.state.dateTime
-            });
             updateNotesFromFireBase(
                 this.Item.noteId,
                 this.state.noteTitle,
@@ -80,13 +79,20 @@ export default class GridViewNotes extends React.Component {
                 this.state.archive,
                 this.state.setColor,
                 this.state.Trash,
+                this.state.NoteImage,
                 this.state.reminderDate,
                 this.state.reminderTime, () => {
+                    pushNotification.localNotificationSchedule({
+                        message: this.state.noteTitle,
+                        subText: this.state.noteContent,
+                        date: this.state.dateTime
+                    });
                     this.props.navigation.navigate('Notes');
                 })
             this.props.navigation.navigate('Notes')
         }
     }
+
 
     render() {
         // console.log('iiiiiiiiiiiiiiiiiii    ', this.Item)
@@ -197,13 +203,69 @@ export default class GridViewNotes extends React.Component {
                                     </View>
                                 ))
                         }
+                        {
+                            this.Item === null ?
+                                <FlatList
+                                    data={this.state.NoteImage}
+                                    renderItem={({ item }) => (
+                                        <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
+                                            <FastImage
+                                                style={styles.ImageLoading}
+                                                source={{
+                                                    uri: item.src,
+                                                    priority: FastImage.priority.high,
+                                                }}
+                                            />
+                                        </View>
+                                    )}
+                                    //Setting the number of column
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => index}
+                                />
+                                :
+                                <FlatList
+                                    data={this.Item.NoteImage}
+                                    renderItem={({ item }) => (
+                                        <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
+                                            <FastImage
+                                                style={styles.ImageLoading}
+                                                source={{
+                                                    uri: item.src,
+                                                    priority: FastImage.priority.high,
+                                                }}
+                                            />
+                                        </View>
+                                    )}
+                                    //Setting the number of column
+                                    numColumns={3}
+                                    keyExtractor={(item, index) => index}
+                                />
+                        }
                     </ScrollView>
                 </View>
 
                 <View style={styles.bottomFooter}>
                     <View
                         style={{ width: '50%' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                let options = {
+                                    title: 'Select Image',
+                                    storageOptions: {
+                                        skipBackup: true,
+                                        path: 'images',
+                                    },
+                                };
+                                ImagePicker.showImagePicker(options, async (response) => {
+                                    if (response.uri) {
+                                        await this.setState({
+                                            NoteImage: response.uri
+                                        })
+                                        setNoteInFireBase(response.uri)
+                                    }
+                                })
+                            }}
+                        >
                             <MaterialCommunityIcon name="plus-box-outline" size={30} style={{ marginLeft: 8, marginTop: 8 }} />
                         </TouchableOpacity>
                     </View>
