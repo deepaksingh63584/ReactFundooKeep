@@ -62,7 +62,7 @@ class DRAGgableNotes extends Component {
     }
 
     render() {
-
+        console.log(",data", JSON.stringify(this.props));
         return (
             <View style={{ height: "100%", width: "100%" }}>
                 <View>
@@ -97,7 +97,7 @@ class DRAGgableNotes extends Component {
                                         numColumns={this.state.listView ? 1 : 2}
                                         data={this.state.pinNotes}
                                         key={this.state.listView ? 1 : 2}
-                                        keyExtractor={(item, index) => `draggable-item-${item.key}`}
+                                        keyExtractor={(item, index) => `draggable-item-${item.noteId}`}
                                         ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>DRAG PINNED: {this.state.pinNotes.length}</Text>}
                                         renderItem={({ item, index, drag, isActive }) =>
                                             <TouchableOpacity
@@ -105,6 +105,7 @@ class DRAGgableNotes extends Component {
                                                     backgroundColor: isActive ? "yellow" : item.backgroundColor,
                                                 }}
                                                 onLongPress={drag}
+                                                onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}
                                             >
                                                 <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />
                                                 {item.dragNotes}
@@ -122,7 +123,7 @@ class DRAGgableNotes extends Component {
                                         numColumns={this.state.listView ? 1 : 2}
                                         data={this.state.unPinNotes}
                                         key={this.state.listView ? 1 : 2}
-                                        keyExtractor={(item, index) => `draggable-item-${item.key}`}
+                                        keyExtractor={(item, index) => `draggable-item-${item.noteId}`}
                                         ListHeaderComponent={<Text style={{ padding: 10, fontSize: 18 }}>DRAG OTHERS: {this.state.unPinNotes.length}</Text>}
                                         renderItem={({ item, index, drag, isActive }) =>
                                             <TouchableOpacity
@@ -130,10 +131,11 @@ class DRAGgableNotes extends Component {
                                                     backgroundColor: isActive ? "yellow" : item.backgroundColor,
                                                 }}
                                                 onLongPress={drag}
+                                                onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}
                                             >
                                                 <ListViewNotes {...item} notesProps={this.props} listView={this.state.listView} />
                                             </TouchableOpacity>}
-                                        onDragEnd={({ data }) => this.setState({ data })}
+                                        onDragEnd={({ data }) => this.setState({ unPinNotes: data })}
                                     />
                             }
                         </View>

@@ -25,6 +25,7 @@ export default class ListViewNotes extends React.Component {
                 <View style={{ height: '100%', width: '100%' }}>
                     <Card style={[this.props.listView ? styles.cardStyle2 : styles.cardStyle, { backgroundColor: this.props.Color }]}
                         onPress={() => this.props.notesProps.navigation.navigate('CreateNote', { 'item': this.props })}
+                    // onLongPress={drag}
                     >
                         <Text style={styles.cardTitle}>{this.props.Title}</Text>
                         <Text style={{ padding: 10 }}>{this.props.Content}</Text>

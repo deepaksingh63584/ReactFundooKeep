@@ -11,6 +11,7 @@ import LabelContent from './components/LabelsComponents/LabelContent';
 import ChartPage from './components/dashBoardComponent/DrawerComponent/ChartPage'
 import DragableNotes from './components/dashBoardComponent/DrawerComponent/DragableNotes'
 import ImageLoading from './components/ExtraTaskComponet/ImageLoading'
+import SqliteDB from './components/ExtraTaskComponet/SqliteDB'
 
 export const DrawerNavigator = createDrawerNavigator({
     Notes: {
@@ -39,7 +40,10 @@ export const DrawerNavigator = createDrawerNavigator({
     },
     ImageLoading: {
         screen: ImageLoading
-    }
+    },
+    SqliteDB: {
+        screen: SqliteDB
+    },
 },
     {
         initialRouteName: 'Notes',

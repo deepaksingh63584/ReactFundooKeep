@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -10,7 +10,7 @@ import moment from 'moment';
 import { Chip, Dialog } from 'material-bread';
 import pushNotification from 'react-native-push-notification';
 import ImagePicker from 'react-native-image-picker';
-import { fetchNotesData, storeNotesImage } from '../logInComponents/logInFireBase'
+// import { fetchNotesData, storeNotesImage } from '../logInComponents/logInFireBase'
 
 export default class NoteCard extends React.Component {
     constructor(props) {
@@ -91,6 +91,14 @@ export default class NoteCard extends React.Component {
                 })
             this.props.navigation.navigate('Notes')
         }
+    }
+
+    handleImage = (uri) => {
+        this.setState({ imgURL: uri })
+    }
+
+    handleCaptureImage = (uri) => {
+        this.setState({ imgURL: uri })
     }
 
 
@@ -203,36 +211,45 @@ export default class NoteCard extends React.Component {
                                     </View>
                                 ))
                         }
-                        {
-                            this.Item === null ?
-                                <FlatList
-                                    data={this.state.NoteImage}
-                                    renderItem={({ item }) => (
-                                        <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
-                                            <FastImage
-                                                style={styles.ImageLoading}
-                                                source={{
-                                                    uri: item.src,
-                                                    priority: FastImage.priority.high,
-                                                }}
-                                            />
-                                        </View>
-                                    )}
-                                    //Setting the number of column
-                                    numColumns={3}
-                                    keyExtractor={(item, index) => index}
-                                />
+                        {/* {
+                            this.state.NoteImage !== undefined && this.state.NoteImage !== '' ?
+                                <View
+                                    style={{
+                                        // backgroundColor : 'blue' , 
+                                        width: '80%',
+                                        height: '60%',
+                                        marginLeft: 35
+                                    }}
+                                >
+                                    <FastImage
+                                        style={{ width: 150, height: 150, }}
+                                        source={{
+                                            uri: this.state.imgURL,
+                                            headers: { Authorization: 'someAuthToken' },
+                                            priority: FastImage.priority.normal,
+                                        }}
+                                        resizeMode={FastImage.resizeMode.stretch}
+                                    />
+                                </View>
                                 :
                                 <FlatList
                                     data={this.Item.NoteImage}
                                     renderItem={({ item }) => (
-                                        <View style={{ flex: 1, flexDirection: 'column', margin: 1 }}>
-                                            <FastImage
-                                                style={styles.ImageLoading}
+                                        <View
+                                            style={{
+                                                // backgroundColor : 'blue' , 
+                                                width: '80%',
+                                                height: '60%',
+                                                marginLeft: 35
+                                            }}
+                                        >                                            <FastImage
+                                                style={{ width: 150, height: 150, }}
                                                 source={{
-                                                    uri: item.src,
-                                                    priority: FastImage.priority.high,
+                                                    uri: this.state.imgURL,
+                                                    headers: { Authorization: 'someAuthToken' },
+                                                    priority: FastImage.priority.normal,
                                                 }}
+                                                resizeMode={FastImage.resizeMode.stretch}
                                             />
                                         </View>
                                     )}
@@ -240,7 +257,7 @@ export default class NoteCard extends React.Component {
                                     numColumns={3}
                                     keyExtractor={(item, index) => index}
                                 />
-                        }
+                        } */}
                     </ScrollView>
                 </View>
 

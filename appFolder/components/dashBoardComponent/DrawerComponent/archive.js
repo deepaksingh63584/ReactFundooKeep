@@ -23,7 +23,6 @@ export default class Archive extends React.Component {
                         Notes.push(snapObj[key])
                         this.props.navigation.navigate('Notes')
                     }
-
                 })
                 this.setState({ Notes: Notes })
             }

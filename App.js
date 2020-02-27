@@ -16,7 +16,7 @@ import 'react-native-gesture-handler';
 
 const App = () => {
   // return < DrawerContent />
-  return <RootNavigator />
+  return <RootNavigator uriPrefix={'fundoonotes://'} />
   // return <NoteCard />
   // return <Notes />
   // return <BottomPopUp />

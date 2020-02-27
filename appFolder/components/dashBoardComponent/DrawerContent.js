@@ -152,6 +152,15 @@ export default class DrawerContent extends React.Component {
                     </View>
                 </TouchableHighlight>
 
+                <TouchableHighlight underlayColor='#feefc3'
+                    onPress={() => this.props.navigation.navigate('SqliteDB')}>
+                    <View
+                        style={styles.iconButton}>
+                        <MaterialCommunityIcon name="database" size={30} />
+                        <Text style={styles.textField}>Sqlite DB</Text>
+                    </View>
+                </TouchableHighlight>
+
             </ScrollView>
         );
     }
